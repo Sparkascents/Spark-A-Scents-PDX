@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spark A Scents PDX</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://app.snipcart.com">
+<link rel="preconnect" href="https://cdn.snipcart.com">
+<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.3/default/snipcart.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5ede0;
+    --amber: #c8842a;
+    --ember: #8b3a1a;
+    --sage: #6b7c5c;
+    --smoke: #b8a898;
+    --cream: #fdf6ec;
+    --deep: #0f0a05;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep);
+    color: var(--parchment);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(15,10,5,0.95), transparent);
+  }
+
+  .nav-logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--amber);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--amber); }
+
+  /* COMING SOON BADGE */
+  .coming-soon-banner {
+    background: linear-gradient(135deg, rgba(200,132,42,0.08), rgba(107,124,92,0.06));
+    border: 1px solid rgba(200,132,42,0.2);
+    border-left: 3px solid var(--amber);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .coming-soon-banner .cs-icon { font-size: 1.2rem; }
+  .coming-soon-banner .cs-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.9rem; color: var(--smoke); }
+  .coming-soon-banner .cs-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.2rem; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 50% 60%, rgba(200,132,42,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 30% 20%, rgba(139,58,26,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 70% 80%, rgba(107,124,92,0.08) 0%, transparent 60%),
+      var(--deep);
+  }
+
+  /* Animated smoke wisps */
+  .wsp {
+    position: absolute;
+    width: 2px;
+    border-radius: 50%;
+    background: linear-gradient(to top, rgba(200,132,42,0.3), transparent);
+    animation: rise linear infinite;
+    filter: blur(3px);
+  }
+  .wsp:nth-child(1) { left: 48%; height: 180px; animation-duration: 6s; animation-delay: 0s; }
+  .wsp:nth-child(2) { left: 50%; height: 120px; animation-duration: 8s; animation-delay: 2s; width: 1px; }
+  .wsp:nth-child(3) { left: 52%; height: 150px; animation-duration: 7s; animation-delay: 4s; }
+
+  @keyframes rise {
+    0% { bottom: 38%; opacity: 0; transform: translateX(0) scaleX(1); }
+    20% { opacity: 0.7; }
+    60% { transform: translateX(15px) scaleX(2); opacity: 0.4; }
+    100% { bottom: 65%; opacity: 0; transform: translateX(-10px) scaleX(3); }
+  }
+
+  .flame {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: flicker 3s ease-in-out infinite;
+    display: block;
+    position: relative;
+    z-index: 2;
+  }
+
+  @keyframes flicker {
+    0%, 100% { transform: scale(1) rotate(-1deg); filter: brightness(1); }
+    25% { transform: scale(1.05) rotate(1deg); filter: brightness(1.2); }
+    50% { transform: scale(0.97) rotate(-0.5deg); filter: brightness(0.9); }
+    75% { transform: scale(1.03) rotate(1.5deg); filter: brightness(1.1); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s ease both;
+    animation-delay: 0.2s;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2.2rem, 6vw, 5rem);
+    line-height: 1.1;
+    color: var(--parchment);
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s ease both;
+    animation-delay: 0.4s;
+    text-shadow: 0 0 80px rgba(200,132,42,0.4);
+  }
+
+  .hero-title span {
+    color: var(--amber);
+    font-style: italic;
+  }
+
+  .hero-sub {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--smoke);
+    margin-top: 1.5rem;
+    max-width: 480px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s ease both;
+    animation-delay: 0.6s;
+  }
+
+  .hero-cta {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s ease both;
+    animation-delay: 0.8s;
+  }
+
+  .btn-primary {
+    background: var(--amber);
+    color: var(--deep);
+    padding: 0.85rem 2.2rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: var(--parchment);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(200,132,42,0.4);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--parchment);
+    padding: 0.85rem 2.2rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 400;
+    border: 1px solid rgba(200,132,42,0.4);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+    transform: translateY(-2px);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    opacity: 0.5;
+    animation: bob 2s ease-in-out infinite;
+    z-index: 2;
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(200,132,42,0.3), transparent); }
+  .divider-glyph { color: var(--amber); font-size: 1.2rem; }
+
+  /* SECTION BASE */
+  section { padding: 6rem 2rem; }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1rem;
+    font-family: 'Jost', sans-serif;
+  }
+
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+    color: var(--parchment);
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-body {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--smoke);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    max-width: 520px;
+  }
+
+  /* STORY SECTION */
+  .story {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .story-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .candle-art {
+    width: 220px;
+    height: 320px;
+    position: relative;
+  }
+
+  .candle-body {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 240px;
+    background: linear-gradient(135deg, #d4b896 0%, #c8a878 40%, #b89060 100%);
+    border-radius: 4px 4px 2px 2px;
+    box-shadow: inset -8px 0 20px rgba(0,0,0,0.3), 0 4px 30px rgba(200,132,42,0.2);
+  }
+
+  .candle-drip {
+    position: absolute;
+    background: linear-gradient(to bottom, #d4b896, #c8a878);
+    border-radius: 0 0 50% 50%;
+  }
+  .candle-drip:nth-child(1) { width: 10px; height: 30px; top: -20px; left: 8px; }
+  .candle-drip:nth-child(2) { width: 7px; height: 20px; top: -10px; left: 55px; }
+  .candle-drip:nth-child(3) { width: 8px; height: 25px; top: -15px; right: 5px; }
+
+  .candle-wick {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 18px;
+    background: #2a1a0a;
+    border-radius: 1px;
+  }
+
+  .candle-flame-wrap {
+    position: absolute;
+    top: -75px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .candle-flame {
+    width: 22px;
+    height: 42px;
+    background: radial-gradient(ellipse at 50% 80%, #fff 0%, #ffe066 30%, #ff9500 60%, transparent 90%);
+    border-radius: 50% 50% 30% 30%;
+    animation: candleFlame 2s ease-in-out infinite;
+    filter: blur(1px);
+    box-shadow: 0 0 20px 8px rgba(255,160,0,0.5), 0 0 60px 20px rgba(200,132,42,0.3);
+  }
+
+  @keyframes candleFlame {
+    0%, 100% { transform: scaleX(1) scaleY(1) rotate(-2deg); }
+    33% { transform: scaleX(0.85) scaleY(1.1) rotate(2deg); }
+    66% { transform: scaleX(1.1) scaleY(0.95) rotate(-1deg); }
+  }
+
+  .glow-ring {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(200,132,42,0.12) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  }
+
+  /* SCENTS / PRODUCTS GRID */
+  .products-section { background: linear-gradient(to bottom, var(--deep), #120c06, var(--deep)); }
+
+  .products-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .product-card {
+    background: linear-gradient(135deg, rgba(200,132,42,0.06), rgba(107,124,92,0.04));
+    border: 1px solid rgba(200,132,42,0.15);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: all 0.4s;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(200,132,42,0.08), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .product-card:hover::before { opacity: 1; }
+  .product-card:hover { border-color: rgba(200,132,42,0.4); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+
+  .product-icon {
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .product-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.85rem;
+    color: var(--parchment);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  .product-desc {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--smoke);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .product-price {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  .product-tag {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: rgba(200,132,42,0.15);
+    color: var(--amber);
+    padding: 0.3rem 0.7rem;
+    border: 1px solid rgba(200,132,42,0.3);
+  }
+
+  /* MEMORY SECTION */
+  .memory-section {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .memory-quote {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.3rem, 3vw, 2.2rem);
+    color: var(--parchment);
+    line-height: 1.5;
+    margin: 2.5rem 0;
+    position: relative;
+    padding: 0 3rem;
+  }
+
+  .memory-quote::before, .memory-quote::after {
+    content: '"';
+    font-family: 'IM Fell English', serif;
+    font-size: 5rem;
+    color: rgba(200,132,42,0.2);
+    position: absolute;
+    line-height: 1;
+  }
+
+  .memory-quote::before { top: -1rem; left: 0; }
+  .memory-quote::after { content: '"'; bottom: -2.5rem; right: 0; }
+
+  /* SCENT NOTES - witchy grid */
+  .notes-section { 
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(107,124,92,0.08) 0%, transparent 70%);
+  }
+
+  .notes-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    margin-top: 3rem;
+    border: 1px solid rgba(200,132,42,0.1);
+  }
+
+  .note-cell {
+    padding: 2rem 1.5rem;
+    border-right: 1px solid rgba(200,132,42,0.1);
+    border-bottom: 1px solid rgba(200,132,42,0.1);
+    text-align: center;
+    transition: background 0.3s;
+  }
+
+  .note-cell:hover { background: rgba(200,132,42,0.05); }
+
+  .note-glyph { font-size: 1.5rem; margin-bottom: 0.7rem; display: block; }
+
+  .note-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--amber);
+    margin-bottom: 0.4rem;
+  }
+
+  .note-desc {
+    font-size: 0.75rem;
+    color: var(--smoke);
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* BOOKING / WORKSHOP */
+  .workshop-section {
+    background: linear-gradient(135deg, rgba(139,58,26,0.1), rgba(200,132,42,0.05), rgba(107,124,92,0.08));
+    border-top: 1px solid rgba(200,132,42,0.1);
+    border-bottom: 1px solid rgba(200,132,42,0.1);
+  }
+
+  .workshop-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .workshop-dates {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .date-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border: 1px solid rgba(200,132,42,0.15);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .date-row:hover {
+    border-color: rgba(200,132,42,0.5);
+    background: rgba(200,132,42,0.05);
+  }
+
+  .date-info { display: flex; flex-direction: column; gap: 0.2rem; }
+
+  .date-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.75rem;
+    color: var(--parchment);
+    letter-spacing: 0.05em;
+  }
+
+  .date-meta {
+    font-size: 0.7rem;
+    color: var(--smoke);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .date-spots {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sage);
+    background: rgba(107,124,92,0.1);
+    border: 1px solid rgba(107,124,92,0.2);
+    padding: 0.3rem 0.8rem;
+  }
+
+  .date-spots.few { color: var(--amber); background: rgba(200,132,42,0.1); border-color: rgba(200,132,42,0.2); }
+
+  /* TESTIMONIALS */
+  .testimonials-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .testimonial-card {
+    padding: 2rem;
+    border: 1px solid rgba(200,132,42,0.1);
+    background: rgba(200,132,42,0.02);
+    text-align: left;
+    position: relative;
+  }
+
+  .testimonial-card::before {
+    content: '✦';
+    position: absolute;
+    top: -0.6rem;
+    left: 1.5rem;
+    color: var(--amber);
+    font-size: 0.8rem;
+    background: var(--deep);
+    padding: 0 0.5rem;
+  }
+
+  .testimonial-text {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--smoke);
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+
+  .testimonial-name {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(200,132,42,0.1);
+    padding: 4rem 2rem 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.2rem;
+    color: var(--amber);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-tagline {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--smoke);
+    margin-bottom: 2rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    list-style: none;
+    margin-bottom: 3rem;
+  }
+
+  .footer-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--amber); }
+
+  .footer-copy {
+    font-size: 0.65rem;
+    color: rgba(184,168,152,0.4);
+    letter-spacing: 0.15em;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,6,2,0.92);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .modal-overlay.open { display: flex; animation: fadeIn 0.3s ease; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal {
+    background: #1a1108;
+    border: 1px solid rgba(200,132,42,0.3);
+    padding: 3rem;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem; right: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--smoke);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--amber); }
+
+  .modal-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1rem;
+    color: var(--parchment);
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-sub {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--smoke);
+    margin-bottom: 2rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .form-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--smoke);
+  }
+
+  .form-input, .form-select {
+    background: rgba(200,132,42,0.05);
+    border: 1px solid rgba(200,132,42,0.2);
+    color: var(--parchment);
+    padding: 0.75rem 1rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+  }
+
+  .form-input:focus, .form-select:focus { border-color: var(--amber); }
+  .form-select option { background: #1a1108; }
+
+  .form-submit {
+    width: 100%;
+    background: var(--amber);
+    color: var(--deep);
+    border: none;
+    padding: 1rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 0.5rem;
+  }
+
+  .form-submit:hover { background: var(--parchment); transform: translateY(-1px); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .story { grid-template-columns: 1fr; gap: 3rem; }
+    .story-visual { display: none; }
+    .products-grid { grid-template-columns: 1fr; }
+    .notes-grid { grid-template-columns: repeat(2, 1fr); }
+    .workshop-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+  }
+  /* COLLECTION TABS */
+  .collection-tabs {
+    display: flex;
+    gap: 0;
+    margin: 3rem auto 0;
+    max-width: 680px;
+    border: 1px solid rgba(200,132,42,0.2);
+  }
+
+  .col-tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-right: 1px solid rgba(200,132,42,0.2);
+    color: var(--smoke);
+    padding: 1rem 0.5rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .col-tab:last-child { border-right: none; }
+  .col-tab:hover { background: rgba(200,132,42,0.06); color: var(--parchment); }
+  .col-tab.active { background: rgba(200,132,42,0.12); color: var(--amber); }
+
+  .tab-glyph { font-size: 1rem; }
+
+  /* COLLECTION HEADERS */
+  .collection-header {
+    text-align: center;
+    padding: 3rem 2rem 2rem;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .col-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .col-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    margin-bottom: 0.8rem;
+  }
+
+  .col-desc {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--smoke);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .whispers-header { border-bottom: 1px solid rgba(139,58,26,0.2); }
+  .whispers-header .col-eyebrow { color: rgba(139,58,26,0.8); }
+  .whispers-header .col-name { color: var(--parchment); text-shadow: 0 0 40px rgba(139,58,26,0.4); }
+
+  .outdoors-header { border-bottom: 1px solid rgba(107,124,92,0.3); }
+  .outdoors-header .col-eyebrow { color: var(--sage); }
+  .outdoors-header .col-name { color: var(--parchment); text-shadow: 0 0 40px rgba(107,124,92,0.3); }
+
+  .neon-header { border-bottom: 1px solid rgba(180,100,200,0.25); }
+  .neon-header .col-eyebrow { color: #b464c8; }
+  .neon-header .col-name { color: var(--parchment); text-shadow: 0 0 40px rgba(180,100,200,0.4); }
+
+  /* COLLECTION-SPECIFIC CARD ACCENTS */
+  .wax-card { border-color: rgba(139,58,26,0.2); }
+  .wax-card:hover { border-color: rgba(139,58,26,0.5); box-shadow: 0 20px 60px rgba(139,58,26,0.2); }
+
+  .out-card { border-color: rgba(107,124,92,0.2); }
+  .out-card:hover { border-color: rgba(107,124,92,0.5); box-shadow: 0 20px 60px rgba(107,124,92,0.15); }
+
+  .neon-card { border-color: rgba(180,100,200,0.2); }
+  .neon-card:hover { border-color: rgba(180,100,200,0.5); box-shadow: 0 20px 60px rgba(180,100,200,0.2); }
+
+  /* NEON COMING SOON */
+  .neon-coming-soon {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    max-width: 480px;
+    margin: 2.5rem auto 0;
+    padding: 1.2rem 1.5rem;
+    border: 1px solid rgba(180,100,200,0.25);
+    background: rgba(180,100,200,0.04);
+  }
+
+  .ncs-glyph { font-size: 1.3rem; color: #b464c8; flex-shrink: 0; }
+  .ncs-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: #b464c8; margin-bottom: 0.3rem; }
+  .ncs-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: var(--smoke); line-height: 1.6; }
+
+  .product-tagline {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.78rem;
+    color: var(--amber);
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
+    opacity: 0.9;
+  }
+
+  /* PRICING MODAL UI */
+  .type-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  .type-btn {
+    background: transparent;
+    border: 1px solid rgba(200,132,42,0.2);
+    color: var(--smoke);
+    padding: 0.7rem 0.4rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .type-btn:hover { border-color: rgba(200,132,42,0.5); color: var(--parchment); background: rgba(200,132,42,0.05); }
+  .type-btn.selected { border-color: var(--amber); color: var(--amber); background: rgba(200,132,42,0.1); }
+
+  .type-btn .type-icon { font-size: 1.1rem; display: block; margin-bottom: 0.3rem; }
+  .type-btn .type-price { font-size: 0.7rem; color: var(--amber); display: block; margin-top: 0.2rem; font-weight: 500; }
+
+  .variant-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .variant-btn {
+    background: transparent;
+    border: 1px solid rgba(200,132,42,0.2);
+    color: var(--smoke);
+    padding: 0.5rem 0.9rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .variant-btn:hover { border-color: var(--amber); color: var(--parchment); }
+  .variant-btn.selected { border-color: var(--amber); background: rgba(200,132,42,0.12); color: var(--amber); }
+
+  .selected-summary {
+    background: rgba(200,132,42,0.06);
+    border: 1px solid rgba(200,132,42,0.2);
+    border-left: 3px solid var(--amber);
+    padding: 0.9rem 1.1rem;
+    margin-top: 0.5rem;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--parchment);
+    font-family: 'Jost', sans-serif;
+    letter-spacing: 0.05em;
+  }
+
+  .summary-price {
+    font-size: 1rem;
+    color: var(--amber);
+    font-weight: 500;
+  }
+
+  /* CUSTOM CANDLE BUILDER */
+  .custom-step { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(200,132,42,0.1); }
+  .custom-step:last-of-type { border-bottom: none; }
+  .custom-step-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.1rem; }
+  .step-num { font-family: 'Cinzel Decorative', serif; font-size: 0.65rem; color: var(--amber); opacity: 0.7; letter-spacing: 0.1em; }
+  .step-title { font-family: 'Jost', sans-serif; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--parchment); }
+  .step-note { font-size: 0.65rem; color: var(--smoke); letter-spacing: 0.1em; font-weight: 300; }
+  .wax-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; }
+  .wax-card { border: 1px solid rgba(200,132,42,0.18); padding: 1rem 0.7rem; text-align: center; cursor: pointer; transition: all 0.25s; background: transparent; }
+  .wax-card:hover { border-color: rgba(200,132,42,0.5); background: rgba(200,132,42,0.04); }
+  .wax-card.selected { border-color: var(--amber); background: rgba(200,132,42,0.1); }
+  .wax-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
+  .wax-name { font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 500; color: var(--parchment); letter-spacing: 0.08em; margin-bottom: 0.2rem; }
+  .wax-detail { font-size: 0.65rem; color: var(--smoke); margin-bottom: 0.4rem; }
+  .wax-cure { font-size: 0.62rem; color: var(--amber); letter-spacing: 0.08em; }
+  .cure-notice { display: flex; align-items: flex-start; gap: 0.8rem; margin-top: 1rem; padding: 0.9rem 1rem; background: rgba(200,132,42,0.05); border: 1px solid rgba(200,132,42,0.2); border-left: 3px solid var(--amber); }
+  .cure-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .cure-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.3rem; }
+  .cure-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: var(--smoke); line-height: 1.5; }
+  .scent-search-wrap { margin-bottom: 0.8rem; }
+  .scent-search { width: 100%; }
+  .selected-scents-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-bottom: 1rem; }
+  .scent-slot { border: 1px dashed rgba(200,132,42,0.25); padding: 0.6rem 0.8rem; font-size: 0.7rem; color: rgba(184,168,152,0.4); letter-spacing: 0.1em; min-height: 2.2rem; display: flex; align-items: center; transition: all 0.2s; }
+  .scent-slot.filled { border-color: rgba(200,132,42,0.4); border-style: solid; color: var(--parchment); font-size: 0.72rem; justify-content: space-between; }
+  .slot-remove { cursor: pointer; color: var(--smoke); font-size: 0.7rem; padding: 0 0.2rem; flex-shrink: 0; transition: color 0.2s; }
+  .slot-remove:hover { color: var(--amber); }
+  .scent-pool { display: flex; flex-wrap: wrap; gap: 0.4rem; max-height: 160px; overflow-y: auto; padding: 0.5rem 0; }
+  .scent-chip { background: transparent; border: 1px solid rgba(200,132,42,0.18); color: var(--smoke); padding: 0.35rem 0.75rem; font-family: 'Jost', sans-serif; font-size: 0.68rem; letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s; }
+  .scent-chip:hover:not(:disabled) { border-color: var(--amber); color: var(--parchment); background: rgba(200,132,42,0.06); }
+  .scent-chip:disabled { opacity: 0.3; cursor: not-allowed; }
+  .scent-chip.taken { border-color: rgba(200,132,42,0.4); color: var(--amber); opacity: 0.5; }
+  .vessel-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem; }
+  .vessel-btn { background: transparent; border: 1px solid rgba(200,132,42,0.2); color: var(--smoke); padding: 0.55rem 1rem; font-family: 'Jost', sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; cursor: pointer; transition: all 0.2s; }
+  .vessel-btn:hover:not(.coming) { border-color: var(--amber); color: var(--parchment); }
+  .vessel-btn.selected { border-color: var(--amber); background: rgba(200,132,42,0.1); color: var(--amber); }
+  .vessel-btn.coming { opacity: 0.35; cursor: default; border-style: dashed; }
+  .vessel-note { font-size: 0.68rem; color: rgba(184,168,152,0.5); font-family: 'IM Fell English', serif; font-style: italic; }
+  .custom-summary { background: rgba(200,132,42,0.04); border: 1px solid rgba(200,132,42,0.2); padding: 1.2rem 1.4rem; margin-top: 1rem; }
+  .cs-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 0.45rem 0; border-bottom: 1px solid rgba(200,132,42,0.07); gap: 1rem; }
+  .cs-row:last-child { border-bottom: none; }
+  .total-row { padding-top: 0.7rem; margin-top: 0.3rem; border-top: 1px solid rgba(200,132,42,0.2); border-bottom: none; }
+  .cs-key { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke); flex-shrink: 0; padding-top: 0.15rem; }
+  .cs-val { font-size: 0.82rem; color: var(--parchment); text-align: right; line-height: 1.4; }
+
+  /* CART BUTTON */
+  .cart-btn {
+    background: transparent;
+    border: 1px solid rgba(200,132,42,0.4);
+    color: var(--amber);
+    padding: 0.5rem 1rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .cart-btn:hover { background: rgba(200,132,42,0.1); border-color: var(--amber); }
+  .snipcart-items-count { background: var(--amber); color: var(--deep); border-radius: 50%; width: 18px; height: 18px; font-size: 0.65rem; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
+
+  /* SNIPCART THEME OVERRIDES */
+  :root {
+    --color-default: #f5ede0;
+    --color-alt: #b8a898;
+    --color-input: #1a1108;
+    --color-input-hover: #c8842a;
+    --color-buttonPrimary: #c8842a;
+    --color-buttonPrimary-hover: #f5ede0;
+    --color-badge: #c8842a;
+    --color-badge-active: #8b3a1a;
+    --color-success: #6b7c5c;
+    --color-modal-overlay: rgba(10,6,2,0.92);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Spark A Scents PDX</a>
+  <ul class="nav-links">
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="snipcart-checkout cart-btn">
+    🛒 <span class="snipcart-items-count"></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="wsp"></div>
+  <div class="wsp"></div>
+  <div class="wsp"></div>
+
+  <span class="flame">🕯️</span>
+  <p class="hero-eyebrow">Portland, Oregon · Handcrafted</p>
+  <h1 class="hero-title">Spark A<br><span>Scents</span> PDX</h1>
+  <p class="hero-sub">A single flame, a breath of smoke — and suddenly you're somewhere else entirely. Every scent is a door back to a moment you thought you'd forgotten.</p>
+  <div class="hero-cta">
+    <a href="#shop" class="btn-primary">Shop the Collection</a>
+    <a href="#contact" class="btn-ghost">Get in Touch</a>
+  </div>
+  <div class="scroll-hint">↓ Descend</div>
+</section>
+
+<!-- STORY SECTION -->
+<section id="story" style="padding: 7rem 2rem;">
+  <div class="story">
+    <div>
+      <p class="section-label">Our Origin</p>
+      <h2 class="section-title">Born from Memory & Magic</h2>
+      <p class="section-body">Every candle we pour carries an intention. Rooted in the earthy richness of the Pacific Northwest and the quiet mysticism of scent memory, Spark A Scents PDX was created to help you reconnect — to a place, a person, a feeling you didn't know you'd been missing.</p>
+      <p class="section-body" style="margin-top: 1.2rem;">We hand-select every note: foraged botanicals, aged woods, smoke-kissed resins. No shortcuts, no synthetics. Just pure, ritual-worthy fragrance.</p>
+      <a href="#shop" class="btn-primary" style="display: inline-block; margin-top: 2rem;">Explore Scents</a>
+    </div>
+    <div class="story-visual">
+      <div class="glow-ring"></div>
+      <div class="candle-art">
+        <div class="candle-flame-wrap">
+          <div class="candle-flame"></div>
+        </div>
+        <div class="candle-body">
+          <div class="candle-wick"></div>
+          <div class="candle-drip"></div>
+          <div class="candle-drip"></div>
+          <div class="candle-drip"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><span class="divider-glyph">✦</span><div class="divider-line"></div></div>
+
+<!-- MEMORY QUOTE -->
+<section style="padding: 6rem 2rem;">
+  <div class="memory-section">
+    <p class="section-label">The Philosophy</p>
+    <blockquote class="memory-quote">
+      Scent is the oldest spell. One breath and the past rushes in — vivid, warm, and whole.
+    </blockquote>
+  </div>
+</section>
+
+<!-- SCENT NOTES -->
+<section class="notes-section" style="padding: 6rem 2rem;">
+  <div class="notes-inner">
+    <p class="section-label" style="text-align:center;">What We Work With</p>
+    <h2 class="section-title" style="text-align:center;">The Grimoire of Notes</h2>
+    <div class="notes-grid">
+      <div class="note-cell"><span class="note-glyph">🌲</span><div class="note-name">Forest Floor</div><div class="note-desc">Damp earth, fern, old cedar</div></div>
+      <div class="note-cell"><span class="note-glyph">🌑</span><div class="note-name">Dark Amber</div><div class="note-desc">Resin, benzoin, shadow</div></div>
+      <div class="note-cell"><span class="note-glyph">🌿</span><div class="note-name">Wild Herbs</div><div class="note-desc">Sage, mugwort, rosemary</div></div>
+      <div class="note-cell"><span class="note-glyph">🔥</span><div class="note-name">Woodsmoke</div><div class="note-desc">Campfire, birch, char</div></div>
+      <div class="note-cell"><span class="note-glyph">🌹</span><div class="note-name">Dried Florals</div><div class="note-desc">Rose hips, lavender, petrichor</div></div>
+      <div class="note-cell"><span class="note-glyph">🍂</span><div class="note-name">Fallen Leaves</div><div class="note-desc">Oak, tobacco, vanilla spice</div></div>
+      <div class="note-cell"><span class="note-glyph">🌙</span><div class="note-name">Night Air</div><div class="note-desc">Cool musk, rain, moonflower</div></div>
+      <div class="note-cell"><span class="note-glyph">🫚</span><div class="note-name">Sacred Resins</div><div class="note-desc">Frankincense, myrrh, oud</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section class="products-section" id="shop" style="padding: 7rem 2rem;">
+  <div class="products-inner">
+    <p class="section-label">Shop</p>
+    <h2 class="section-title">The Collections</h2>
+    <p class="section-body" style="margin: 0 auto 1rem; text-align: center;">Each candle hand-poured in Portland — never rushed, always intentional.</p>
+
+    <!-- COLLECTION TABS -->
+    <div class="collection-tabs">
+      <button class="col-tab active" onclick="showCollection('whispers', this)">
+        <span class="tab-glyph">🌑</span> Whispers of Wax
+      </button>
+      <button class="col-tab" onclick="showCollection('outdoors', this)">
+        <span class="tab-glyph">🌲</span> The Great Outdoors
+      </button>
+      <button class="col-tab" onclick="showCollection('neon', this)">
+        <span class="tab-glyph">✨</span> Neon Dreams
+      </button>
+    </div>
+
+    <!-- WHISPERS OF WAX -->
+    <div class="collection-panel" id="col-whispers">
+      <div class="collection-header whispers-header">
+        <div class="col-eyebrow">Collection I</div>
+        <div class="col-name">Whispers of Wax</div>
+        <div class="col-desc">Dark, witchy, and deeply atmospheric. These scents live at the edge of the veil — smoke, shadow, and things that bloom only at night.</div>
+      </div>
+      <div class="products-grid">
+
+        <div class="product-card wax-card" onclick="openModal('Smoke Siren', 'The Allure of Twilight. The Depths of Night.\n\nAt the edge of the darkness, the Siren calls. A hauntingly beautiful descent into the midnight hour, where succulent plum &amp; wild blackberry are caught in a timeless embrace of smoldering amber &amp; creamy sandalwood.\n\nIt is the scent of night\'s first secret — complex, magnetic &amp; as alluring as the shadows of twilight.', 'Plum · Midnight Blackberry · Egyptian Amber · Sandalwood')">
+          <span class="product-icon">🌑</span>
+          <div class="product-name">Smoke Siren</div>
+          <div class="product-tagline">The Allure of Twilight. The Depths of Night.</div>
+          <div class="product-desc">Plum & wild blackberry in a timeless embrace of smoldering amber & creamy sandalwood.</div>
+          <div class="product-price">From $18 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card wax-card" onclick="openModal('Ghost Woods', 'Where the branches know your name.\n\nGhost Woods carries the chill of early snow &amp; the hush of moss-covered stones. A scent forged in silence — ice-tipped greens, damp bark, &amp; memories tangled in the trees.\n\nThis is the forest where no maps lead.', 'Black Coral & Moss · Willow · Woodland Snow')">
+          <span class="product-icon">🌫️</span>
+          <div class="product-name">Ghost Woods</div>
+          <div class="product-tagline">Where the branches know your name.</div>
+          <div class="product-desc">Ice-tipped greens, damp bark & memories tangled in the trees. The forest where no maps lead.</div>
+          <div class="product-price">From $18 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card wax-card" onclick="openModal('Vesper Haze', 'Capture the twilight between worlds.\n\nVesper Haze is the scent of the hour when the sun dips below the horizon &amp; the woods begin to breathe. It opens with the crisp, medicinal clarity of White Sage &amp; Lavender, like a cool mist rolling over the forest floor.\n\nAs the flame settles, the heart reveals a deep, grounded soul of Redwoods &amp; damp highland moss, anchored by resinous, secret-kept notes of ancient Apothecary.', 'White Sage & Lavender · Redwoods & Moss · Apothecary')">
+          <span class="product-icon">🌿</span>
+          <div class="product-name">Vesper Haze</div>
+          <div class="product-tagline">Capture the twilight between worlds.</div>
+          <div class="product-desc">White Sage & Lavender open into Redwoods, highland moss & ancient apothecary.</div>
+          <div class="product-price">From $18 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card wax-card" onclick="openModal('Vein of Gold', 'A relic from your past life.\n\nVein of Gold is a scent of a memory you didn\'t know you owned. It breathes life into the dusty shadows of history with a heavy, glowing heart of Egyptian Amber &amp; the sacred, earthy smoke of Dragon\'s Blood — softened by a whisper of Vanilla that feels like a familiar comfort from another time.\n\nIt is an opulent, resinous pull into the depths of your own lineage — a golden thread connecting who you were to who you are.', 'Egyptian Amber · Dragon\'s Blood · Amber & Driftwood · Vanilla')">
+          <div class="product-tag">Ritual</div>
+          <span class="product-icon">✴️</span>
+          <div class="product-name">Vein of Gold</div>
+          <div class="product-tagline">A relic from your past life.</div>
+          <div class="product-desc">Egyptian Amber & Dragon's Blood softened by a whisper of Vanilla. A golden thread through time.</div>
+          <div class="product-price">From $22 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card wax-card" onclick="openModal(&quot;Hollow's Kiss&quot;, &quot;The scent of a scorched secret.\n\nHollow's Kiss is a study in shadow &amp; light. It opens with the intoxicating, heady bloom of night-blooming Jasmine — an ethereal floral heart that feels both lush &amp; dangerous.\n\nThis sweetness is immediately grounded by the sacred, resinous smoke of Frankincense, giving the air a scorched quality like a guttering candle in an ancient hall. Finally, it is wrapped in the cool, shimmering embrace of Moonlit Silk — a base that feels as smooth &amp; weightless as a ghost's touch.\n\nA haunting, sophisticated floral that lingers long after the flame is out.&quot;, &quot;Jasmine · Frankincense · Moonlit Silk&quot;)">
+          <span class="product-icon">🕯️</span>
+          <div class="product-name">Hollow's Kiss</div>
+          <div class="product-tagline">The scent of a scorched secret.</div>
+          <div class="product-desc">Night-blooming Jasmine grounded by sacred Frankincense, wrapped in Moonlit Silk.</div>
+          <div class="product-price">From $18 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card wax-card" onclick="openModal('Midnight Bloom', 'A garden that breathes only in the dark.\n\nMidnight Bloom is the scent of a garden that only reveals its secrets after dark. It features the rare, delicate sweetness of Wild Tulips tangled in a thicket of Midnight Blackberry vines.\n\nAs the scent unfolds, it settles into a warm, intoxicating heart of Egyptian Amber — creating a fragrance that is both wildly floral &amp; deeply sophisticated.\n\nIt is the bloom of a moment you won\'t want to forget.', 'Midnight Blackberry · Egyptian Amber · Tulip Fields')">
+          <div class="product-tag">Bestseller</div>
+          <span class="product-icon">🌸</span>
+          <div class="product-name">Midnight Bloom</div>
+          <div class="product-tagline">A garden that breathes only in the dark.</div>
+          <div class="product-desc">Wild Tulips & Midnight Blackberry vines settle into a warm heart of Egyptian Amber.</div>
+          <div class="product-price">From $18 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card wax-card" onclick="openModal('Forest Ritual', 'Cleanse the spirit. Ground the soul.\n\nA breath of clarity in a world of noise. It opens with the piercing, medicinal chill of Eucalyptus &amp; the crisp green bite of Arctic Ivy, evoking the air of a high-altitude clearing.\n\nAt its heart, Wild Lavender offers a calming, herbal sanctuary that eases the mind, while a deep, steady base of Sandalwood provides the grounding energy of ancient trees.\n\nThis is more than a fragrance — it is a ceremony of scent, designed to sweep away the static &amp; return you to the earth.', 'Sandalwood · Eucalyptus · Lavender · Arctic Ivy')">
+          <div class="product-tag">Ritual</div>
+          <span class="product-icon">🌲</span>
+          <div class="product-name">Forest Ritual</div>
+          <div class="product-tagline">Cleanse the spirit. Ground the soul.</div>
+          <div class="product-desc">Eucalyptus & Arctic Ivy open into Wild Lavender & Sandalwood. A ceremony of scent.</div>
+          <div class="product-price">From $22 · Tap to explore ✦</div>
+        </div>
+
+      </div>
+
+      <!-- CUSTOM BUILDER CTA -->
+      <div onclick="openCustomModal()" style="margin-top:2rem; border:1px solid rgba(200,132,42,0.35); background:linear-gradient(135deg,rgba(200,132,42,0.07),rgba(139,58,26,0.04)); padding:2rem 2.5rem; display:flex; align-items:center; justify-content:space-between; cursor:pointer; transition:all 0.3s; gap:2rem; flex-wrap:wrap;" onmouseover="this.style.borderColor='rgba(200,132,42,0.7)'" onmouseout="this.style.borderColor='rgba(200,132,42,0.35)'">
+        <div>
+          <div style="font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--amber);margin-bottom:0.5rem;">✦ Custom Order</div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--parchment);margin-bottom:0.5rem;">Build Your Own Candle</div>
+          <div style="font-family:'IM Fell English',serif;font-style:italic;color:var(--smoke);font-size:0.9rem;line-height:1.6;">Choose your wax, blend up to 4 scents from our full inventory, pick your vessel & size. We pour it just for you.</div>
+        </div>
+        <div class="btn-primary" style="white-space:nowrap;flex-shrink:0;">Start Building ✦</div>
+      </div>
+    </div>
+
+    <!-- THE GREAT OUTDOORS -->
+    <div class="collection-panel" id="col-outdoors" style="display:none;">
+      <div class="collection-header outdoors-header">
+        <div class="col-eyebrow">Collection II</div>
+        <div class="col-name">The Great Outdoors</div>
+        <div class="col-desc">Salt air, forest trails, crackling fire & the pull of the Pacific. These scents bring the wild world inside — earthy, coastal, and alive.</div>
+      </div>
+      <div class="products-grid">
+
+        <div class="product-card out-card" onclick="openModal('Where the Coast Sleeps','The tide comes in. The world fades out.\n\nCapture that suspended moment on the shore where the clock stops & the horizon takes over. As the bracing salt air mingles with the glow of Amber & sun-bleached driftwood, the rush of life halts — allowing the world to stand still. So your soul can finally catch up.\n\nGrounded by the strength of Cedar & warm rustic woods with a clean breath of Eucalyptus, this fragrance is a sacred pause. It is an invitation to exhale, recalibrate & find your peace.','Warm Rustic Woods · Amber & Driftwood · Ocean · Cedarwood · Eucalyptus')">
+          <div class="product-tag">Bestseller</div>
+          <span class="product-icon">🌊</span>
+          <div class="product-name">Where the Coast Sleeps</div>
+          <div class="product-tagline">The tide comes in. The world fades out.</div>
+          <div class="product-desc">Salt air & sun-bleached driftwood grounded by Cedar & Eucalyptus. A sacred pause.</div>
+          <div class="product-price">From $18 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card out-card" onclick="openModal('Orchid Nightwood','A bloom that glows in the dark.\n\nDeep in the heart of the midnight forest, a rare beauty unfurls. Orchid Nightwood is a ghostly floral that defies the cold. The velvety depth of Black Orchid is grounded by the ancient strength of Amber & Driftwood, while a sharp, crystalline breeze of Peppermint Willamette cuts through the shadows.\n\nIt is a scent for the wanderer who finds peace in the freezing dark — bracing, elegant & otherworldly.','Amber & Driftwood · Black Orchid · Peppermint Willamette')">
+          <span class="product-icon">🌺</span>
+          <div class="product-name">Orchid Nightwood</div>
+          <div class="product-tagline">A bloom that glows in the dark.</div>
+          <div class="product-desc">Black Orchid & Amber grounded by Driftwood with a crystalline bite of Peppermint Willamette.</div>
+          <div class="product-price">From $18 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card out-card" onclick="openModal('Walk on the Beach','Footprints fade, but the feeling remains.\n\nA sensory journey along the edge of the world. Walk on the Beach captures the untamed beauty of a coastline where the forest meets the tide. The salt-sprayed airy notes of Cannon Beach collide with the deep, earthy mystery of Black Coral & Moss.\n\nIt is the scent of wet sand, ancient stones & the rhythmic pull of the Pacific — a quiet invitation to leave the world behind & follow the shore.','Cannon Beach · Black Coral & Moss')">
+          <span class="product-icon">🏖️</span>
+          <div class="product-name">Walk on the Beach</div>
+          <div class="product-tagline">Footprints fade, but the feeling remains.</div>
+          <div class="product-desc">Cannon Beach salt air meets Black Coral & Moss. The rhythmic pull of the Pacific.</div>
+          <div class="product-price">From $18 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card out-card" onclick="openModal('Lost in the Woods','The deeper you go, the more you find.\n\nA scent for the soul that finds its way by losing the path. Lost in the Woods wraps you in the heavy, comforting embrace of a worn Flannel shirt, while the sharp, bracing bite of Arctic Ivy pulls you deeper into the thicket.\n\nIt is the smell of a winter hike at dusk — warmth & wildness colliding in the silence of the trees. Burn to find your center in the wild.','Arctic Ivy · Flannel')">
+          <span class="product-icon">🌲</span>
+          <div class="product-name">Lost in the Woods</div>
+          <div class="product-tagline">The deeper you go, the more you find.</div>
+          <div class="product-desc">Worn Flannel & Arctic Ivy in the silence of winter trees. Burn to find your center.</div>
+          <div class="product-price">From $18 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card out-card" onclick="openModal('FireSide Barrel','The warmth of a story told by the flame.\n\nA tribute to the quiet dignity of the hearth. FireSide Barrel opens with the rich, spirited depths of Barrel Aged Whiskey, mellowed by the smooth, creamed sweetness of White Oak Vanilla. As the flame matures, the earthy grounding of Amber & Driftwood and the rustic, cedar-kissed air of Log Cabin emerge.\n\nIt is the scent of heavy glass, a crackling fire & the kind of silence that only comes with old memories.','Barrel Aged Whiskey · White Oak & Vanilla · Log Cabin · Amber & Driftwood')">
+          <div class="product-tag">Fan Fave</div>
+          <span class="product-icon">🔥</span>
+          <div class="product-name">FireSide Barrel</div>
+          <div class="product-tagline">The warmth of a story told by the flame.</div>
+          <div class="product-desc">Barrel Aged Whiskey & Vanilla settle into Amber, Driftwood & cedar-kissed Log Cabin air.</div>
+          <div class="product-price">From $22 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card out-card" onclick="openModal('Smokey Glacier','Where the frost meets the flame.\n\nA scent of striking contrasts. Smokey Glacier captures the breath of an ancient ice field meeting the warmth of a mountain camp. The piercing, clean chill of Arctic Ivy is enveloped by the smoldering depths of Bonfire embers & raw Smoke Element.\n\nIt is the aroma of survival & stillness — crisp, dark & undeniably bold.','White Sage & Lavender · Bonfire Element · Cranberry')">
+          <span class="product-icon">🏔️</span>
+          <div class="product-name">Smokey Glacier</div>
+          <div class="product-tagline">Where the frost meets the flame.</div>
+          <div class="product-desc">Arctic Ivy pierces through smoldering Bonfire embers & raw Smoke. Crisp, dark, bold.</div>
+          <div class="product-price">From $18 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card out-card" onclick="openModal(&quot;The Tide's Keepsake&quot;,'Saltwater, sun-bleached shell, dried sea grass, a faint trace of sunlight. What the ocean leaves behind — the quiet gift of a tide that has come and gone, pressed into fragrance forever.','Amber & Driftwood')">
+          <span class="product-icon">🐚</span>
+          <div class="product-name">The Tide's Keepsake</div>
+          <div class="product-tagline">What the ocean leaves behind.</div>
+          <div class="product-desc">Saltwater, sun-bleached shell & dried sea grass. A quiet gift pressed into fragrance.</div>
+          <div class="product-price">From $18 · Tap to explore ✦</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- NEON DREAMS -->
+    <div class="collection-panel" id="col-neon" style="display:none;">
+      <div class="collection-header neon-header">
+        <div class="col-eyebrow">Collection III</div>
+        <div class="col-name">Neon Dreams</div>
+        <div class="col-desc">Bold, electric & alive after midnight. A collection that lives in contrast — sweet shadows, vibrant glow & scents that hit different. Still growing. Stay close.</div>
+      </div>
+      <div class="products-grid" style="max-width: 700px; margin: 0 auto;">
+
+        <div class="product-card neon-card" onclick="openModal('Lucid Lava','A neon dream in the heat of the moment.\n\nExperience a sensory eruption with Lucid Lava. This electric blend takes the iconic, sugared citrus of Volcano Type & floods it with the hyper-real, mouth-watering sweetness of fresh Watermelon.\n\nBold. Bright. Unapologetically alive.','Volcano Type · Watermelon Sugar Lemonade')">
+          <div class="product-tag">New</div>
+          <span class="product-icon">🌋</span>
+          <div class="product-name">Lucid Lava</div>
+          <div class="product-tagline">A neon dream in the heat of the moment.</div>
+          <div class="product-desc">Sugared citrus Volcano Type erupts with hyper-real fresh Watermelon. Bold & unapologetic.</div>
+          <div class="product-price">From $22 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card neon-card" onclick="openModal('Spellbound','Shadows that shimmer. Secrets that sweeten.\n\nDon\'t let the darkness fool you...\n\nSpellbound is a masterpiece of contrast. At first glance, it sits deep & mysterious — an ink-shimmering abyss. But once the flame takes hold, the spell is cast. The shimmering black & pink swirl gives way to a vibrant glow, revealing the sweet side of the shadows.\n\nSome spells are worth falling into.','Love Spell · Watermelon Sugar Lemonade')">
+          <div class="product-tag">New</div>
+          <span class="product-icon">💜</span>
+          <div class="product-name">Spellbound</div>
+          <div class="product-tagline">Shadows that shimmer. Secrets that sweeten.</div>
+          <div class="product-desc">Dark & mysterious at first — but once the flame takes hold, the sweet side of the shadows reveal themselves.</div>
+          <div class="product-price">From $22 · Tap to explore ✦</div>
+        </div>
+
+      </div>
+      <div class="neon-coming-soon">
+        <span class="ncs-glyph">✦</span>
+        <div>
+          <div class="ncs-label">More magic in the making</div>
+          <div class="ncs-text">The Neon Dreams collection is still being conjured. Follow along on Instagram for new drops.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WORKSHOPS COMING SOON -->
+<section style="padding: 4rem 2rem;">
+  <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+    <p class="section-label">Coming Soon</p>
+    <h2 class="section-title">Candle Making Workshops</h2>
+    <p class="section-body" style="margin: 0 auto 1.5rem;">Small groups. Candlelit tables. Good music. We're working on finding the perfect space to gather and pour together — something worthy of the ritual. Stay close.</p>
+    <div class="coming-soon-banner" style="max-width: 480px; margin: 0 auto; text-align: left;">
+      <span class="cs-icon">🕯️</span>
+      <div>
+        <div class="cs-label">On the horizon</div>
+        <div class="cs-text">Workshops are coming. Follow us on Instagram to be the first to know when bookings open.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="margin: 0 auto;"><div class="divider-line"></div><span class="divider-glyph">✦</span><div class="divider-line"></div></div>
+
+<!-- TESTIMONIALS -->
+<section style="padding: 7rem 2rem;">
+  <div class="testimonials-inner">
+    <p class="section-label">The Community</p>
+    <h2 class="section-title">What They Remember</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-text">"I lit Grandma's Kitchen for the first time and cried immediately. In the best way possible. This woman is a witch and I mean that with my whole chest."</p>
+        <div class="testimonial-name">— Maya T., Portland</div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">"Rain on Hot Pavement transported me straight back to childhood summers. I didn't know a candle could do that. I've bought four now."</p>
+        <div class="testimonial-name">— Jordan L., SE PDX</div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">"Midnight in the Woods lives on my altar now. It smells like the forest my grandmother took me to as a kid. I didn't know a candle could do that."</p>
+        <div class="testimonial-name">— Sage R., NE Portland</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-logo">Spark A Scents PDX</div>
+  <div class="footer-tagline">Handcrafted in Portland · Lit with Intention</div>
+  <ul class="footer-links">
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#">Custom Orders</a></li>
+    <li><a href="#"><span class="__cf_email__" data-cfemail="157d7079797a55666574677e746676707b616665716d3b767a78">[email&#160;protected]</span></a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Spark A Scents PDX · All rights reserved · Made with 🕯️ in Portland, OR</div>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal" style="max-width: 560px; max-height: 90vh; overflow-y: auto;">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="flame" style="font-size:1.5rem; margin-bottom:0.8rem;">🕯️</div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-sub" id="modalDesc" style="margin-bottom: 1.8rem;"></div>
+
+    <!-- TYPE SELECTOR -->
+    <div class="form-group">
+      <label class="form-label">Choose Your Style</label>
+      <div class="type-grid" id="typeGrid"></div>
+    </div>
+
+    <!-- SIZE/VARIANT SELECTOR (shown dynamically) -->
+    <div class="form-group" id="variantGroup" style="display:none;">
+      <label class="form-label" id="variantLabel">Choose Size</label>
+      <div class="variant-grid" id="variantGrid"></div>
+    </div>
+
+    <!-- SELECTED SUMMARY -->
+    <div class="selected-summary" id="selectedSummary" style="display:none;">
+      <div class="summary-row">
+        <span id="summaryText"></span>
+        <span id="summaryPrice" class="summary-price"></span>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-top:1.2rem;">
+      <label class="form-label">Quantity</label>
+      <input type="number" class="form-input" value="1" min="1" max="20" style="max-width:100px;">
+    </div>
+
+    <button class="form-submit snipcart-add-item" id="addToCartBtn" style="opacity:0.4; pointer-events:none;"
+      data-item-id=""
+      data-item-name=""
+      data-item-price=""
+      data-item-url="/index.html"
+      data-item-description=""
+      data-item-custom1-name="Scent"
+      data-item-custom1-type="textbox"
+      data-item-custom1-placeholder="e.g. Smoke Siren"
+      data-item-custom2-name="Special Requests"
+      data-item-custom2-type="textbox"
+      data-item-custom2-placeholder="Optional notes...">
+      Select a Style to Continue
+    </button>
+  </div>
+</div>
+
+<!-- CUSTOM CANDLE BUILDER MODAL -->
+<div class="modal-overlay" id="customModal">
+  <div class="modal" style="max-width:620px; max-height:92vh; overflow-y:auto;">
+    <button class="modal-close" onclick="closeCustom()">✕</button>
+    <div style="font-size:1.5rem; margin-bottom:0.6rem;">✨</div>
+    <div class="modal-title">Build Your Custom Candle</div>
+    <div class="modal-sub" style="margin-bottom:1.8rem;">You design it. We pour it with intention.</div>
+
+    <!-- STEP 1: WAX -->
+    <div class="custom-step">
+      <div class="custom-step-header">
+        <span class="step-num">01</span>
+        <span class="step-title">Choose Your Wax</span>
+      </div>
+      <div class="wax-grid">
+        <div class="wax-card" onclick="selectWax('Soy Wax', 14, this)">
+          <div class="wax-icon">🌱</div>
+          <div class="wax-name">Soy Wax</div>
+          <div class="wax-detail">Clean burn · Vegan</div>
+          <div class="wax-cure">⏳ 14 day cure</div>
+        </div>
+        <div class="wax-card" onclick="selectWax('Paraffin Wax', 8, this)">
+          <div class="wax-icon">🕯️</div>
+          <div class="wax-name">Paraffin Wax</div>
+          <div class="wax-detail">Strong throw · Classic</div>
+          <div class="wax-cure">⏳ 8 day cure</div>
+        </div>
+        <div class="wax-card" onclick="selectWax('Beeswax', 22, this)">
+          <div class="wax-icon">🍯</div>
+          <div class="wax-name">Beeswax</div>
+          <div class="wax-detail">Natural · Air purifying</div>
+          <div class="wax-cure">⏳ 22 day cure</div>
+        </div>
+      </div>
+      <div class="cure-notice" id="cureNotice" style="display:none;">
+        <span class="cure-icon">📅</span>
+        <div>
+          <div class="cure-label">Estimated Ready Date</div>
+          <div class="cure-text" id="cureText"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: SCENTS -->
+    <div class="custom-step">
+      <div class="custom-step-header">
+        <span class="step-num">02</span>
+        <span class="step-title">Choose Your Scents <span class="step-note">(up to 4)</span></span>
+      </div>
+      <div class="scent-search-wrap">
+        <input type="text" class="form-input scent-search" id="scentSearch" placeholder="Search scents..." oninput="filterScents(this.value)">
+      </div>
+      <div class="selected-scents-row" id="selectedScentsRow">
+        <div class="scent-slot" id="slot0">+ Add Scent</div>
+        <div class="scent-slot" id="slot1">+ Add Scent</div>
+        <div class="scent-slot" id="slot2">+ Add Scent</div>
+        <div class="scent-slot" id="slot3">+ Add Scent</div>
+      </div>
+      <div class="scent-pool" id="scentPool"></div>
+    </div>
+
+    <!-- STEP 3: VESSEL -->
+    <div class="custom-step">
+      <div class="custom-step-header">
+        <span class="step-num">03</span>
+        <span class="step-title">Choose Your Vessel</span>
+      </div>
+      <div class="vessel-grid" id="vesselGrid">
+        <div class="vessel-btn selected" onclick="selectVessel('Mason Jar', this)">🫙 Mason Jar</div>
+        <div class="vessel-btn" onclick="selectVessel('Colored Jar', this)">🎨 Colored Jar</div>
+        <div class="vessel-btn" onclick="selectVessel('Pillar Mold', this)">🕍 Pillar</div>
+        <div class="vessel-btn" onclick="selectVessel('Art Candle', this)">✨ Art Candle</div>
+        <div class="vessel-btn coming" title="More molds coming soon">＋ More Coming</div>
+      </div>
+      <div class="vessel-note">More jar styles and molds coming soon — check back or DM us on Instagram.</div>
+    </div>
+
+    <!-- STEP 4: SIZE -->
+    <div class="custom-step" id="sizeStep">
+      <div class="custom-step-header">
+        <span class="step-num">04</span>
+        <span class="step-title">Choose Your Size</span>
+      </div>
+      <div class="variant-grid" id="customSizeGrid"></div>
+    </div>
+
+    <!-- STEP 5: NOTES -->
+    <div class="custom-step">
+      <div class="custom-step-header">
+        <span class="step-num">05</span>
+        <span class="step-title">Special Notes <span class="step-note">(optional)</span></span>
+      </div>
+      <textarea class="form-input" rows="3" placeholder="Any special requests, gift messages, or details about your vision..." style="width:100%; resize:vertical;"></textarea>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="custom-summary" id="customSummary" style="display:none;">
+      <div class="cs-row"><span class="cs-key">Wax</span><span class="cs-val" id="csSumWax">—</span></div>
+      <div class="cs-row"><span class="cs-key">Scents</span><span class="cs-val" id="csSumScents">—</span></div>
+      <div class="cs-row"><span class="cs-key">Vessel</span><span class="cs-val" id="csSumVessel">—</span></div>
+      <div class="cs-row"><span class="cs-key">Size</span><span class="cs-val" id="csSumSize">—</span></div>
+      <div class="cs-row total-row"><span class="cs-key">Est. Price</span><span class="cs-val" id="csSumPrice" style="color:var(--amber); font-size:1.1rem;">—</span></div>
+      <div class="cs-row" id="csSumCureRow" style="display:none;"><span class="cs-key">Ready In</span><span class="cs-val" id="csSumCure" style="color:var(--smoke);"></span></div>
+    </div>
+
+    <button class="form-submit" id="customSubmitBtn" style="margin-top:1.5rem; opacity:0.4; pointer-events:none;">Complete Your Selections First</button>
+  </div>
+</div>
+
+<script>
+  const SCENTS = [
+    'Grapefruit & Mangosteen','Jasmine','Arctic Ivy','Egyptian Amber','White Sage & Lavender',
+    'Very Vanilla','Tulies Field','Cranberry Woods','Black Raspberry Vanilla','Black Currant Element',
+    'Smoke & Bonfire Element','Lavender','Woodland Snow','Dragon\'s Blood','Love Spell','Speakeasy',
+    'Midnight Blackberry','Orange Creamsicle','Harvest Moon','Black Sea','Redwoods & Moss',
+    'Moonlit Silk','Apothecary','Amaretto Madeline','Sandalwood','Dark Orchard','Enoki Forest',
+    'Dahlia Noir','Autumn Glow','Selenite Glow','Mineral Drift','Birchwood Cranberry','White Sage',
+    'Clean Wave','Sugared Snickerdoodle','Chestnut Sugar','Cinnamon Noel','Vanilla Snowflake',
+    'Christmas Morning','Sugar Plum','Winterpine','Snow Eucalyptus','Winter White','Cranberry',
+    'Frosted Cranberry','Amber','Peppermint Willamette','Log Cabin','Cannon Beach','Black Orchid',
+    'Barrel Aged Whiskey','Mt. Hood','Mt. Laurel','Pineapple Gardenia','Cedar','Flannel',
+    'Beach Linen','Eucalyptus Woods','Rainy Spring Day','White Tahitian Woods','Volcano Type',
+    'Fall Farmhouse Vanilla','Cranberry Mandarin','Cloud Rainbows','Fusion Energy','Fresh Linen',
+    'Cedarwood','Sweet Orange','Coconut Lime','Cheer Up','Dragon Fruit','Frankincense'
+  ];
+
+  const VESSEL_PRICING = {
+    'Mason Jar':  [{ label:'4 oz', price:'$13' },{ label:'6 oz', price:'$17' },{ label:'8 oz', price:'$21' },{ label:'10 oz', price:'$28' }],
+    'Colored Jar':[{ label:'4 oz', price:'$14' },{ label:'6 oz', price:'$18' },{ label:'8 oz', price:'$22' },{ label:'10 oz', price:'$29' }],
+    'Pillar Mold':[{ label:'3"', price:'$17' },{ label:'6"', price:'$25' }],
+    'Art Candle': [{ label:'6 oz', price:'$27' },{ label:'8 oz', price:'$30' },{ label:'10 oz', price:'$33–$35' }],
+  };
+
+  const WAX_CURE = { 'Soy Wax': 14, 'Paraffin Wax': 8, 'Beeswax': 22 };
+
+  let customWax = null, customVessel = 'Mason Jar', customSize = null;
+  let customScents = [];
+
+  function openCustomModal() {
+    customWax = null; customVessel = 'Mason Jar'; customSize = null; customScents = [];
+    document.getElementById('cureNotice').style.display = 'none';
+    document.getElementById('customSummary').style.display = 'none';
+    document.getElementById('customSubmitBtn').style.opacity = '0.4';
+    document.getElementById('customSubmitBtn').style.pointerEvents = 'none';
+    document.getElementById('customSubmitBtn').textContent = 'Complete Your Selections First';
+    document.getElementById('scentSearch').value = '';
+    document.querySelectorAll('.wax-card').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.vessel-btn').forEach(b => { b.classList.remove('selected'); if(b.textContent.includes('Mason Jar')) b.classList.add('selected'); });
+    updateScentSlots();
+    renderScentPool('');
+    renderSizeGrid();
+    document.getElementById('customModal').classList.add('open');
+  }
+
+  function selectWax(wax, days, el) {
+    customWax = wax;
+    document.querySelectorAll('.wax-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const ready = new Date(); ready.setDate(ready.getDate() + days);
+    const opts = { weekday:'long', month:'long', day:'numeric' };
+    document.getElementById('cureText').textContent = wax + ' needs ' + days + ' days to cure. Your candle will be ready around ' + ready.toLocaleDateString('en-US', opts) + '.';
+    document.getElementById('cureNotice').style.display = 'flex';
+    updateCustomSummary();
+  }
+
+  function filterScents(q) { renderScentPool(q); }
+
+  function renderScentPool(q) {
+    const pool = document.getElementById('scentPool');
+    const filtered = q ? SCENTS.filter(s => s.toLowerCase().includes(q.toLowerCase())) : SCENTS;
+    pool.innerHTML = '';
+    filtered.forEach(s => {
+      const taken = customScents.includes(s);
+      const chip = document.createElement('button');
+      chip.className = 'scent-chip' + (taken ? ' taken' : '');
+      chip.textContent = s;
+      chip.disabled = taken || (customScents.length >= 4 && !taken);
+      chip.onclick = () => addScent(s);
+      pool.appendChild(chip);
+    });
+  }
+
+  function addScent(s) {
+    if (customScents.includes(s) || customScents.length >= 4) return;
+    customScents.push(s);
+    updateScentSlots();
+    renderScentPool(document.getElementById('scentSearch').value);
+    updateCustomSummary();
+  }
+
+  function removeScent(i) {
+    customScents.splice(i, 1);
+    updateScentSlots();
+    renderScentPool(document.getElementById('scentSearch').value);
+    updateCustomSummary();
+  }
+
+  function updateScentSlots() {
+    for (let i = 0; i < 4; i++) {
+      const slot = document.getElementById('slot' + i);
+      if (customScents[i]) {
+        slot.className = 'scent-slot filled';
+        slot.innerHTML = customScents[i] + ' <span class="slot-remove" onclick="removeScent(' + i + ')">✕</span>';
+      } else {
+        slot.className = 'scent-slot';
+        slot.innerHTML = '+ Add Scent';
+      }
+    }
+  }
+
+  function selectVessel(v, el) {
+    customVessel = v; customSize = null;
+    document.querySelectorAll('.vessel-btn:not(.coming)').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    renderSizeGrid();
+    updateCustomSummary();
+  }
+
+  function renderSizeGrid() {
+    const grid = document.getElementById('customSizeGrid');
+    grid.innerHTML = '';
+    const sizes = VESSEL_PRICING[customVessel] || [];
+    sizes.forEach(v => {
+      const btn = document.createElement('button');
+      btn.className = 'variant-btn';
+      btn.textContent = v.label + ' — ' + v.price;
+      btn.onclick = () => { customSize = v; document.querySelectorAll('#customSizeGrid .variant-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); updateCustomSummary(); };
+      grid.appendChild(btn);
+    });
+  }
+
+  function updateCustomSummary() {
+    const summary = document.getElementById('customSummary');
+    const btn = document.getElementById('customSubmitBtn');
+    document.getElementById('csSumWax').textContent = customWax || '—';
+    document.getElementById('csSumScents').textContent = customScents.length ? customScents.join(', ') : '—';
+    document.getElementById('csSumVessel').textContent = customVessel || '—';
+    document.getElementById('csSumSize').textContent = customSize ? customSize.label : '—';
+    document.getElementById('csSumPrice').textContent = customSize ? customSize.price : '—';
+    if (customWax && WAX_CURE[customWax]) {
+      document.getElementById('csSumCure').textContent = WAX_CURE[customWax] + ' days after order';
+      document.getElementById('csSumCureRow').style.display = 'flex';
+    }
+    summary.style.display = 'block';
+    const ready = customWax && customScents.length >= 1 && customVessel && customSize;
+    btn.style.opacity = ready ? '1' : '0.4';
+    btn.style.pointerEvents = ready ? 'auto' : 'none';
+    btn.textContent = ready ? 'Submit Custom Order ✦' : 'Complete Your Selections First';
+  }
+
+  function closeCustom() { document.getElementById('customModal').classList.remove('open'); }
+  document.getElementById('customModal').addEventListener('click', function(e) { if (e.target === this) closeCustom(); });
+
+  const PRICING = {
+    'Tea Lights':   { icon: '🕯️', variants: [{ label: '6-Pack', price: '$7' }] },
+    'Wax Melts':    { icon: '🫧', variants: [{ label: '6-Pack', price: '$7' }, { label: '12-Pack', price: '$12' }] },
+    'Decorative':   { icon: '🌸', variants: [{ label: 'Small', price: '$8' }, { label: 'M/L', price: '$15' }] },
+    'Pillar':       { icon: '🕍', variants: [{ label: '3"', price: '$17' }, { label: '6"', price: '$25' }] },
+    'Mason Jar':    { icon: '🫙', variants: [{ label: '4 oz', price: '$13' }, { label: '6 oz', price: '$17' }, { label: '8 oz', price: '$21' }, { label: '10 oz', price: '$28' }] },
+    'Colored Jar':  { icon: '🎨', variants: [{ label: '4 oz', price: '$14' }, { label: '6 oz', price: '$18' }, { label: '8 oz', price: '$22' }, { label: '10 oz', price: '$29' }] },
+    'Art Candle':   { icon: '✨', variants: [{ label: '6 oz', price: '$27' }, { label: '8 oz', price: '$30' }, { label: '10 oz', price: '$33–$35' }] },
+  };
+
+  let selectedType = null;
+  let selectedVariant = null;
+
+  function showCollection(name, btn) {
+    document.querySelectorAll('.collection-panel').forEach(p => p.style.display = 'none');
+    document.querySelectorAll('.col-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('col-' + name).style.display = 'block';
+    btn.classList.add('active');
+  }
+
+  function openModal(name, desc, notes) {
+    selectedType = null; selectedVariant = null;
+    document.getElementById('modalTitle').textContent = name;
+    const descEl = document.getElementById('modalDesc');
+    descEl.innerHTML = '';
+    if (notes) {
+      const notesDiv = document.createElement('div');
+      notesDiv.style.cssText = 'font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);margin-bottom:0.8rem;';
+      notesDiv.textContent = '✦ ' + notes;
+      descEl.appendChild(notesDiv);
+    }
+    const lines = desc.split('\n');
+    lines.forEach((line, i) => {
+      if (!line.trim()) { const br = document.createElement('div'); br.style.height = '0.5rem'; descEl.appendChild(br); return; }
+      const p = document.createElement('p');
+      p.style.cssText = i === 0 ? 'font-style:italic;color:var(--amber);font-family:"IM Fell English",serif;font-size:0.95rem;margin-bottom:0.5rem;' : 'font-family:"IM Fell English",serif;font-style:italic;font-size:0.88rem;color:var(--smoke);line-height:1.75;margin-bottom:0.3rem;';
+      p.textContent = line;
+      descEl.appendChild(p);
+    });
+    document.getElementById('variantGroup').style.display = 'none';
+    document.getElementById('selectedSummary').style.display = 'none';
+    const addBtn = document.getElementById('addToCartBtn');
+    addBtn.style.opacity = '0.4';
+    addBtn.style.pointerEvents = 'none';
+    addBtn.textContent = 'Select a Style to Continue';
+
+    const typeGrid = document.getElementById('typeGrid');
+    typeGrid.innerHTML = '';
+    Object.entries(PRICING).forEach(([type, data]) => {
+      const startPrice = data.variants[0].price;
+      const priceLabel = data.variants.length > 1 ? 'From ' + startPrice : startPrice;
+      const btn = document.createElement('button');
+      btn.className = 'type-btn';
+      btn.innerHTML = '<span class="type-icon">' + data.icon + '</span>' + type + '<span class="type-price">' + priceLabel + '</span>';
+      btn.onclick = () => selectType(type, btn);
+      typeGrid.appendChild(btn);
+    });
+
+    document.getElementById('productModal').classList.add('open');
+  }
+
+  function selectType(type, btn) {
+    selectedType = type; selectedVariant = null;
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    document.getElementById('selectedSummary').style.display = 'none';
+    const addBtn = document.getElementById('addToCartBtn');
+    const data = PRICING[type];
+
+    if (data.variants.length === 1) {
+      selectedVariant = data.variants[0];
+      document.getElementById('variantGroup').style.display = 'none';
+      updateSummary();
+    } else {
+      addBtn.style.opacity = '0.4';
+      addBtn.style.pointerEvents = 'none';
+      addBtn.textContent = 'Select a Size to Continue';
+      document.getElementById('variantLabel').textContent = type === 'Wax Melts' ? 'Choose Pack Size' : 'Choose Size';
+      const variantGrid = document.getElementById('variantGrid');
+      variantGrid.innerHTML = '';
+      data.variants.forEach(v => {
+        const vBtn = document.createElement('button');
+        vBtn.className = 'variant-btn';
+        vBtn.textContent = v.label + ' — ' + v.price;
+        vBtn.onclick = () => selectVariant(v, vBtn);
+        variantGrid.appendChild(vBtn);
+      });
+      document.getElementById('variantGroup').style.display = 'block';
+    }
+  }
+
+  function selectVariant(variant, btn) {
+    selectedVariant = variant;
+    document.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    updateSummary();
+  }
+
+  function updateSummary() {
+    if (!selectedType || !selectedVariant) return;
+    const label = selectedVariant.label ? selectedType + ' · ' + selectedVariant.label : selectedType;
+    const candleName = document.getElementById('modalTitle').textContent;
+    const priceNum = parseFloat(selectedVariant.price.replace(/[^0-9.]/g, ''));
+    document.getElementById('summaryText').textContent = label;
+    document.getElementById('summaryPrice').textContent = selectedVariant.price;
+    document.getElementById('selectedSummary').style.display = 'block';
+    const addBtn = document.getElementById('addToCartBtn');
+    addBtn.style.opacity = '1';
+    addBtn.style.pointerEvents = 'auto';
+    addBtn.textContent = 'Add to Cart ✦';
+    // Populate Snipcart data attributes
+    const itemId = (candleName + '-' + selectedType + '-' + (selectedVariant.label || '')).replace(/\s+/g, '-').toLowerCase();
+    addBtn.setAttribute('data-item-id', itemId);
+    addBtn.setAttribute('data-item-name', candleName + ' · ' + label);
+    addBtn.setAttribute('data-item-price', priceNum);
+    addBtn.setAttribute('data-item-description', candleName + ' — ' + label + ' · Hand-poured in Portland, OR');
+  }
+
+  function closeModal() { document.getElementById('productModal').classList.remove('open'); }
+  document.getElementById('productModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+</script>
+<!-- SNIPCART -->
+<div hidden id="snipcart" data-api-key="ZjVhNzFmYzktMWZiZS00M2VkLTkyMjktMGRhNWUyNzM0OGViNjM5MDg0MjU0MTg0MDc4MDIx"></div>
+<script async src="https://cdn.snipcart.com/themes/v3.3.3/default/snipcart.js"></script>
+</body>
+</html>
