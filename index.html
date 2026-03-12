@@ -81,6 +81,47 @@
 
   .nav-links a:hover { color: var(--amber); }
 
+  /* SHIPPING ANNOUNCEMENT BAR */
+  .shipping-bar {
+    background: linear-gradient(90deg, rgba(15,10,5,0.98), rgba(25,15,5,0.98), rgba(15,10,5,0.98));
+    border-bottom: 1px solid rgba(200,132,42,0.2);
+    padding: 0.55rem 1rem;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .shipping-bar-text {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--smoke);
+    letter-spacing: 0.04em;
+  }
+  .shipping-bar-text strong {
+    color: var(--amber);
+    font-style: normal;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+  }
+  .shipping-bar-divider {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: rgba(200,132,42,0.4);
+  }
+  @media (max-width: 600px) {
+    .shipping-bar { gap: 0.5rem; padding: 0.5rem; }
+    .shipping-bar-divider { display: none; }
+    .shipping-bar-text { font-size: 0.72rem; }
+  }
+
   /* COMING SOON BADGE */
   .coming-soon-banner {
     background: linear-gradient(135deg, rgba(200,132,42,0.08), rgba(107,124,92,0.06));
@@ -1114,6 +1155,15 @@
 </head>
 <body>
 
+<!-- SHIPPING ANNOUNCEMENT BAR -->
+<div class="shipping-bar">
+  <span class="shipping-bar-text">🚚 <strong>FLAT RATE $9 SHIPPING</strong> on all US orders</span>
+  <div class="shipping-bar-divider"></div>
+  <span class="shipping-bar-text">🎉 Spend <strong>$50+</strong>? Use code <strong>FREESHIP50</strong> for FREE shipping!</span>
+  <div class="shipping-bar-divider"></div>
+  <span class="shipping-bar-text">🕯️ Hand poured in <strong>Portland, OR</strong></span>
+</div>
+
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">Spark A Scents PDX</a>
@@ -1208,6 +1258,28 @@
     <p class="section-label">Shop</p>
     <h2 class="section-title">The Collections</h2>
     <p class="section-body" style="margin: 0 auto 1rem; text-align: center;">Each candle hand-poured in Portland — never rushed, always intentional.</p>
+
+    <!-- SHIPPING PROMO NOTICE -->
+    <div style="
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, rgba(200,132,42,0.08), rgba(107,124,92,0.06));
+      border: 1px solid rgba(200,132,42,0.22);
+      border-left: 3px solid var(--amber);
+      padding: 0.7rem 1.4rem;
+      margin: 0 auto 2.5rem;
+      border-radius: 2px;
+      max-width: 520px;
+      width: 100%;
+    ">
+      <span style="font-size: 1.1rem;">🎉</span>
+      <span style="font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: var(--smoke); line-height: 1.5;">
+        Spend <strong style="color: var(--amber); font-style: normal; font-family: 'Jost', sans-serif; font-size: 0.8rem; letter-spacing: 0.05em;">$50 or more</strong> and get 
+        <strong style="color: var(--amber); font-style: normal; font-family: 'Jost', sans-serif; font-size: 0.8rem; letter-spacing: 0.05em;">FREE SHIPPING</strong> — use code 
+        <strong style="color: var(--parchment); font-style: normal; font-family: 'Jost', sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; background: rgba(200,132,42,0.15); padding: 0.1rem 0.4rem; border-radius: 2px;">FREESHIP50</strong> at checkout!
+      </span>
+    </div>
 
     <!-- COLLECTION TABS -->
     <div class="collection-tabs">
@@ -1397,6 +1469,15 @@
           <div class="product-name">Spellbound</div>
           <div class="product-tagline">Shadows that shimmer. Secrets that sweeten.</div>
           <div class="product-desc">Dark & mysterious at first — but once the flame takes hold, the sweet side of the shadows reveal themselves.</div>
+          <div class="product-price">From $22 · Tap to explore ✦</div>
+        </div>
+
+        <div class="product-card neon-card" onclick="openModal('Blacklight Berry','Sweet never looked so dangerous.\n\nSome people need the light to find their way. Not you.\n\nBlacklight Berry is for the one who found herself in the dark. Where Dark Orchard\'s brooding depth meets the wild sharp bite of Cranberry Woods & the lush sweetness of Black Raspberry Vanilla — something electric is born.\n\nNot loud. Not obvious. Just undeniably, beautifully YOU.\n\nLight it. Find yourself.','Dark Orchard · Cranberry Woods · Black Raspberry Vanilla')">
+          <div class="product-tag">New</div>
+          <span class="product-icon">🍒</span>
+          <div class="product-name">Blacklight Berry</div>
+          <div class="product-tagline">Sweet never looked so dangerous.</div>
+          <div class="product-desc">Dark Orchard & Cranberry Woods collide with Black Raspberry Vanilla. For the one who found herself in the dark.</div>
           <div class="product-price">From $22 · Tap to explore ✦</div>
         </div>
 
