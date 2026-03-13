@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spark A Scents PDX</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://app.snipcart.com">
+<link rel="preconnect" href="https://cdn.snipcart.com">
+<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.3/default/snipcart.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5ede0;
+    --amber: #c8842a;
+    --ember: #8b3a1a;
+    --sage: #6b7c5c;
+    --smoke: #b8a898;
+    --cream: #fdf6ec;
+    --deep: #0f0a05;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep);
+    color: var(--parchment);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(15,10,5,0.95), transparent);
+  }
+
+  .nav-logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--amber);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--amber); }
+
+  /* COMING SOON BADGE */
+  .coming-soon-banner {
+    background: linear-gradient(135deg, rgba(200,132,42,0.08), rgba(107,124,92,0.06));
+    border: 1px solid rgba(200,132,42,0.2);
+    border-left: 3px solid var(--amber);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .coming-soon-banner .cs-icon { font-size: 1.2rem; }
+  .coming-soon-banner .cs-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.9rem; color: var(--smoke); }
+  .coming-soon-banner .cs-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.2rem; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 50% 60%, rgba(200,132,42,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 30% 20%, rgba(139,58,26,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 70% 80%, rgba(107,124,92,0.08) 0%, transparent 60%),
+      var(--deep);
+  }
+
+  .wsp {
+    position: absolute;
+    width: 2px;
+    border-radius: 50%;
+    background: linear-gradient(to top, rgba(200,132,42,0.3), transparent);
+    animation: rise linear infinite;
+    filter: blur(3px);
+  }
+  .wsp:nth-child(1) { left: 48%; height: 180px; animation-duration: 6s; animation-delay: 0s; }
+  .wsp:nth-child(2) { left: 50%; height: 120px; animation-duration: 8s; animation-delay: 2s; width: 1px; }
+  .wsp:nth-child(3) { left: 52%; height: 150px; animation-duration: 7s; animation-delay: 4s; }
+
+  @keyframes rise {
+    0% { bottom: 38%; opacity: 0; transform: translateX(0) scaleX(1); }
+    20% { opacity: 0.7; }
+    60% { transform: translateX(15px) scaleX(2); opacity: 0.4; }
+    100% { bottom: 65%; opacity: 0; transform: translateX(-10px) scaleX(3); }
+  }
+
+  .flame {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: flicker 3s ease-in-out infinite;
+    display: block;
+    position: relative;
+    z-index: 2;
+  }
+
+  @keyframes flicker {
+    0%, 100% { transform: scale(1) rotate(-1deg); filter: brightness(1); }
+    25% { transform: scale(1.05) rotate(1deg); filter: brightness(1.2); }
+    50% { transform: scale(0.97) rotate(-0.5deg); filter: brightness(0.9); }
+    75% { transform: scale(1.03) rotate(1.5deg); filter: brightness(1.1); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s ease both;
+    animation-delay: 0.2s;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2.2rem, 6vw, 5rem);
+    line-height: 1.1;
+    color: var(--parchment);
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s ease both;
+    animation-delay: 0.4s;
+    text-shadow: 0 0 80px rgba(200,132,42,0.4);
+  }
+
+  .hero-title span { color: var(--amber); font-style: italic; }
+
+  .hero-sub {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--smoke);
+    margin-top: 1.5rem;
+    max-width: 480px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s ease both;
+    animation-delay: 0.6s;
+  }
+
+  .hero-cta {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s ease both;
+    animation-delay: 0.8s;
+  }
+
+  .btn-primary {
+    background: var(--amber);
+    color: var(--deep);
+    padding: 0.85rem 2.2rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: var(--parchment);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(200,132,42,0.4);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--parchment);
+    padding: 0.85rem 2.2rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 400;
+    border: 1px solid rgba(200,132,42,0.4);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+    transform: translateY(-2px);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    opacity: 0.5;
+    animation: bob 2s ease-in-out infinite;
+    z-index: 2;
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(200,132,42,0.3), transparent); }
+  .divider-glyph { color: var(--amber); font-size: 1.2rem; }
+
+  section { padding: 6rem 2rem; }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1rem;
+    font-family: 'Jost', sans-serif;
+  }
+
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+    color: var(--parchment);
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-body {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--smoke);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    max-width: 520px;
+  }
+
+  .story {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .story-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .candle-art { width: 220px; height: 320px; position: relative; }
+
+  .candle-body {
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 80px; height: 240px;
+    background: linear-gradient(135deg, #d4b896 0%, #c8a878 40%, #b89060 100%);
+    border-radius: 4px 4px 2px 2px;
+    box-shadow: inset -8px 0 20px rgba(0,0,0,0.3), 0 4px 30px rgba(200,132,42,0.2);
+  }
+
+  .candle-drip {
+    position: absolute;
+    background: linear-gradient(to bottom, #d4b896, #c8a878);
+    border-radius: 0 0 50% 50%;
+  }
+  .candle-drip:nth-child(1) { width: 10px; height: 30px; top: -20px; left: 8px; }
+  .candle-drip:nth-child(2) { width: 7px; height: 20px; top: -10px; left: 55px; }
+  .candle-drip:nth-child(3) { width: 8px; height: 25px; top: -15px; right: 5px; }
+
+  .candle-wick {
+    position: absolute; top: -18px; left: 50%;
+    transform: translateX(-50%);
+    width: 2px; height: 18px;
+    background: #2a1a0a; border-radius: 1px;
+  }
+
+  .candle-flame-wrap {
+    position: absolute; top: -75px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center;
+  }
+
+  .candle-flame {
+    width: 22px; height: 42px;
+    background: radial-gradient(ellipse at 50% 80%, #fff 0%, #ffe066 30%, #ff9500 60%, transparent 90%);
+    border-radius: 50% 50% 30% 30%;
+    animation: candleFlame 2s ease-in-out infinite;
+    filter: blur(1px);
+    box-shadow: 0 0 20px 8px rgba(255,160,0,0.5), 0 0 60px 20px rgba(200,132,42,0.3);
+  }
+
+  @keyframes candleFlame {
+    0%, 100% { transform: scaleX(1) scaleY(1) rotate(-2deg); }
+    33% { transform: scaleX(0.85) scaleY(1.1) rotate(2deg); }
+    66% { transform: scaleX(1.1) scaleY(0.95) rotate(-1deg); }
+  }
+
+  .glow-ring {
+    position: absolute; width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(200,132,42,0.12) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  }
+
+  .products-section { background: linear-gradient(to bottom, var(--deep), #120c06, var(--deep)); }
+
+  .products-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .product-card {
+    background: linear-gradient(135deg, rgba(200,132,42,0.06), rgba(107,124,92,0.04));
+    border: 1px solid rgba(200,132,42,0.15);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: all 0.4s;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(200,132,42,0.08), transparent);
+    opacity: 0; transition: opacity 0.4s;
+  }
+
+  .product-card:hover::before { opacity: 1; }
+  .product-card:hover { border-color: rgba(200,132,42,0.4); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+
+  .product-icon { font-size: 2.2rem; margin-bottom: 1.2rem; display: block; }
+  .product-name { font-family: 'Cinzel Decorative', serif; font-size: 0.85rem; color: var(--parchment); margin-bottom: 0.8rem; letter-spacing: 0.05em; }
+  .product-desc { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.9rem; color: var(--smoke); line-height: 1.7; margin-bottom: 1.5rem; }
+  .product-price { font-family: 'Jost', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); }
+  .product-tag { position: absolute; top: 1rem; right: 1rem; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; background: rgba(200,132,42,0.15); color: var(--amber); padding: 0.3rem 0.7rem; border: 1px solid rgba(200,132,42,0.3); }
+
+  .memory-section { max-width: 900px; margin: 0 auto; text-align: center; }
+
+  .memory-quote {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.3rem, 3vw, 2.2rem);
+    color: var(--parchment);
+    line-height: 1.5;
+    margin: 2.5rem 0;
+    position: relative;
+    padding: 0 3rem;
+  }
+
+  .memory-quote::before, .memory-quote::after {
+    content: '"';
+    font-family: 'IM Fell English', serif;
+    font-size: 5rem;
+    color: rgba(200,132,42,0.2);
+    position: absolute;
+    line-height: 1;
+  }
+  .memory-quote::before { top: -1rem; left: 0; }
+  .memory-quote::after { content: '"'; bottom: -2.5rem; right: 0; }
+
+  .notes-section { background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(107,124,92,0.08) 0%, transparent 70%); }
+  .notes-inner { max-width: 1000px; margin: 0 auto; }
+
+  .notes-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; margin-top: 3rem;
+    border: 1px solid rgba(200,132,42,0.1);
+  }
+
+  .note-cell { padding: 2rem 1.5rem; border-right: 1px solid rgba(200,132,42,0.1); border-bottom: 1px solid rgba(200,132,42,0.1); text-align: center; transition: background 0.3s; }
+  .note-cell:hover { background: rgba(200,132,42,0.05); }
+  .note-glyph { font-size: 1.5rem; margin-bottom: 0.7rem; display: block; }
+  .note-name { font-family: 'Cinzel Decorative', serif; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--amber); margin-bottom: 0.4rem; }
+  .note-desc { font-size: 0.75rem; color: var(--smoke); font-family: 'IM Fell English', serif; font-style: italic; line-height: 1.5; }
+
+  .workshop-section { background: linear-gradient(135deg, rgba(139,58,26,0.1), rgba(200,132,42,0.05), rgba(107,124,92,0.08)); border-top: 1px solid rgba(200,132,42,0.1); border-bottom: 1px solid rgba(200,132,42,0.1); }
+  .workshop-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+
+  .testimonials-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+  .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+
+  .testimonial-card { padding: 2rem; border: 1px solid rgba(200,132,42,0.1); background: rgba(200,132,42,0.02); text-align: left; position: relative; }
+  .testimonial-card::before { content: '✦'; position: absolute; top: -0.6rem; left: 1.5rem; color: var(--amber); font-size: 0.8rem; background: var(--deep); padding: 0 0.5rem; }
+  .testimonial-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.9rem; color: var(--smoke); line-height: 1.8; margin-bottom: 1.2rem; }
+  .testimonial-name { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); }
+
+  footer { border-top: 1px solid rgba(200,132,42,0.1); padding: 4rem 2rem 2rem; text-align: center; }
+  .footer-logo { font-family: 'Cinzel Decorative', serif; font-size: 1.2rem; color: var(--amber); margin-bottom: 0.5rem; }
+  .footer-tagline { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.9rem; color: var(--smoke); margin-bottom: 2rem; }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; list-style: none; margin-bottom: 3rem; }
+  .footer-links a { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke); text-decoration: none; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--amber); }
+  .footer-copy { font-size: 0.65rem; color: rgba(184,168,152,0.4); letter-spacing: 0.15em; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(10,6,2,0.92); z-index: 500; align-items: center; justify-content: center; padding: 2rem; }
+  .modal-overlay.open { display: flex; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal { background: #1a1108; border: 1px solid rgba(200,132,42,0.3); padding: 3rem; max-width: 480px; width: 100%; position: relative; }
+  .modal-close { position: absolute; top: 1rem; right: 1.5rem; background: none; border: none; color: var(--smoke); font-size: 1.2rem; cursor: pointer; transition: color 0.2s; }
+  .modal-close:hover { color: var(--amber); }
+  .modal-title { font-family: 'Cinzel Decorative', serif; font-size: 1rem; color: var(--parchment); margin-bottom: 0.5rem; }
+  .modal-sub { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.9rem; color: var(--smoke); margin-bottom: 2rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.2rem; }
+  .form-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke); }
+  .form-input, .form-select { background: rgba(200,132,42,0.05); border: 1px solid rgba(200,132,42,0.2); color: var(--parchment); padding: 0.75rem 1rem; font-family: 'Jost', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.3s; width: 100%; }
+  .form-input:focus, .form-select:focus { border-color: var(--amber); }
+  .form-select option { background: #1a1108; }
+
+  .form-submit { width: 100%; background: var(--amber); color: var(--deep); border: none; padding: 1rem; font-family: 'Jost', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; cursor: pointer; transition: all 0.3s; margin-top: 0.5rem; }
+  .form-submit:hover { background: var(--parchment); transform: translateY(-1px); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .story { grid-template-columns: 1fr; gap: 3rem; }
+    .story-visual { display: none; }
+    .products-grid { grid-template-columns: 1fr; }
+    .notes-grid { grid-template-columns: repeat(2, 1fr); }
+    .workshop-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+  }
+
+  .collection-tabs { display: flex; gap: 0; margin: 3rem auto 0; max-width: 680px; border: 1px solid rgba(200,132,42,0.2); }
+  .col-tab { flex: 1; background: transparent; border: none; border-right: 1px solid rgba(200,132,42,0.2); color: var(--smoke); padding: 1rem 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+  .col-tab:last-child { border-right: none; }
+  .col-tab:hover { background: rgba(200,132,42,0.06); color: var(--parchment); }
+  .col-tab.active { background: rgba(200,132,42,0.12); color: var(--amber); }
+  .tab-glyph { font-size: 1rem; }
+
+  .collection-header { text-align: center; padding: 3rem 2rem 2rem; margin-bottom: 1rem; position: relative; }
+  .col-eyebrow { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .col-name { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.2rem, 3vw, 2rem); margin-bottom: 0.8rem; }
+  .col-desc { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1rem; color: var(--smoke); max-width: 560px; margin: 0 auto; line-height: 1.7; }
+
+  .whispers-header { border-bottom: 1px solid rgba(139,58,26,0.2); }
+  .whispers-header .col-eyebrow { color: rgba(139,58,26,0.8); }
+  .whispers-header .col-name { color: var(--parchment); text-shadow: 0 0 40px rgba(139,58,
