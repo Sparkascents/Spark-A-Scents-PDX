@@ -44,7 +44,7 @@
   /* NAV */
   nav {
     position: fixed;
-    top: 0; left: 0; right: 0;
+    top: 36px; left: 0; right: 0;
     z-index: 100;
     padding: 1.2rem 3rem;
     display: flex;
@@ -1168,6 +1168,7 @@
   <ul class="nav-links">
     <li><a href="#story">Our Story</a></li>
     <li><a href="#shop">Shop</a></li>
+    <li><a href="#findme">Find Me</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <button class="cart-btn" onclick="window.open('https://buy.stripe.com/9B65kD7J0bftglm8iR5wI00','_blank')">🛒 Shop Now</button>
@@ -1530,15 +1531,72 @@
   </div>
 </section>
 
+<!-- FIND ME SECTION -->
+<section id="findme" style="padding: 6rem 2rem;">
+  <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+    <p class="section-label">Find Me</p>
+    <h2 class="section-title">Where the Candles Go</h2>
+    <p class="section-body" style="margin: 0 auto 2.5rem;">Catch Spark A Scents PDX in the wild — at markets, pop-ups, and local events around Portland. Follow along on Instagram and Facebook to never miss a date!!</p>
+
+    <!-- Events placeholder -->
+    <div class="coming-soon-banner" style="max-width: 560px; margin: 0 auto 2.5rem; text-align: left;">
+      <span class="cs-icon">🗓️</span>
+      <div>
+        <div class="cs-label">Stay Tuned</div>
+        <div class="cs-text">No events scheduled yet — but we're working on it!! Follow us on Instagram and Facebook to be the first to know when we'll be at a Saturday Market or pop-up near you!!</div>
+      </div>
+    </div>
+
+    <!-- Social links -->
+    <div style="display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;">
+      <a href="https://www.instagram.com/sparkascentspdx503" target="_blank" style="
+        display: inline-flex; align-items: center; gap: 0.6rem;
+        background: linear-gradient(135deg, rgba(200,132,42,0.1), rgba(107,124,92,0.08));
+        border: 1px solid rgba(200,132,42,0.25);
+        color: var(--parchment);
+        padding: 0.75rem 1.6rem;
+        border-radius: 2px;
+        font-family: 'Jost', sans-serif;
+        font-size: 0.78rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.2s;
+      " onmouseover="this.style.borderColor='rgba(200,132,42,0.6)'" onmouseout="this.style.borderColor='rgba(200,132,42,0.25)'">
+        📸 Instagram
+      </a>
+      <a href="https://www.facebook.com/Sparkascentspdx" target="_blank" style="
+        display: inline-flex; align-items: center; gap: 0.6rem;
+        background: linear-gradient(135deg, rgba(200,132,42,0.1), rgba(107,124,92,0.08));
+        border: 1px solid rgba(200,132,42,0.25);
+        color: var(--parchment);
+        padding: 0.75rem 1.6rem;
+        border-radius: 2px;
+        font-family: 'Jost', sans-serif;
+        font-size: 0.78rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.2s;
+      " onmouseover="this.style.borderColor='rgba(200,132,42,0.6)'" onmouseout="this.style.borderColor='rgba(200,132,42,0.25)'">
+        👥 Facebook
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="margin: 0 auto;"><div class="divider-line"></div><span class="divider-glyph">✦</span><div class="divider-line"></div></div>
+
 <!-- FOOTER -->
 <footer id="contact">
   <div class="footer-logo">Spark A Scents PDX</div>
   <div class="footer-tagline">Handcrafted in Portland · Lit with Intention</div>
   <ul class="footer-links">
-    <li><a href="#">Instagram</a></li>
+    <li><a href="https://www.instagram.com/sparkascentspdx503" target="_blank">Instagram</a></li>
+    <li><a href="https://www.facebook.com/Sparkascentspdx" target="_blank">Facebook</a></li>
     <li><a href="#shop">Shop</a></li>
-    <li><a href="#">Custom Orders</a></li>
-    <li><a href="#"><span class="__cf_email__" data-cfemail="157d7079797a55666574677e746676707b616665716d3b767a78">[email&#160;protected]</span></a></li>
+    <li><a href="#findme">Find Me</a></li>
+    <li><a href="mailto:sparkascentspdx@gmail.com">sparkascentspdx@gmail.com</a></li>
   </ul>
   <div class="footer-copy">© 2026 Spark A Scents PDX · All rights reserved · Made with 🕯️ in Portland, OR</div>
 </footer>
