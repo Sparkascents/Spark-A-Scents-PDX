@@ -5,9 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Spark A Scents PDX</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://app.snipcart.com">
-<link rel="preconnect" href="https://cdn.snipcart.com">
-<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.3/default/snipcart.css">
+
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1136,7 +1134,7 @@
     gap: 0.4rem;
   }
   .cart-btn:hover { background: rgba(200,132,42,0.1); border-color: var(--amber); }
-  .snipcart-items-count { background: var(--amber); color: var(--deep); border-radius: 50%; width: 18px; height: 18px; font-size: 0.65rem; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
+  .snipcart-items-count { display: none; }
 
   /* SNIPCART THEME OVERRIDES */
   :root {
@@ -1172,9 +1170,7 @@
     <li><a href="#shop">Shop</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="snipcart-checkout cart-btn">
-    🛒 <span class="snipcart-items-count"></span>
-  </button>
+  <button class="cart-btn" onclick="window.open('https://buy.stripe.com/9B65kD7J0bftglm8iR5wI00','_blank')">🛒 Shop Now</button>
 </nav>
 
 <!-- HERO -->
@@ -1580,20 +1576,8 @@
       <input type="number" class="form-input" value="1" min="1" max="20" style="max-width:100px;">
     </div>
 
-    <button class="form-submit snipcart-add-item" id="addToCartBtn" style="opacity:0.4; pointer-events:none;"
-      data-item-id=""
-      data-item-name=""
-      data-item-price=""
-      data-item-url="/index.html"
-      data-item-description=""
-      data-item-custom1-name="Scent"
-      data-item-custom1-type="textbox"
-      data-item-custom1-placeholder="e.g. Smoke Siren"
-      data-item-custom2-name="Special Requests"
-      data-item-custom2-type="textbox"
-      data-item-custom2-placeholder="Optional notes...">
-      Select a Style to Continue
-    </button>
+    <button class="form-submit" id="addToCartBtn" style="opacity:0.4; pointer-events:none;"
+            onclick="goToStripe()">Select a Style to Continue</button>
   </div>
 </div>
 
@@ -1952,27 +1936,66 @@
     if (!selectedType || !selectedVariant) return;
     const label = selectedVariant.label ? selectedType + ' · ' + selectedVariant.label : selectedType;
     const candleName = document.getElementById('modalTitle').textContent;
-    const priceNum = parseFloat(selectedVariant.price.replace(/[^0-9.]/g, ''));
     document.getElementById('summaryText').textContent = label;
     document.getElementById('summaryPrice').textContent = selectedVariant.price;
     document.getElementById('selectedSummary').style.display = 'block';
     const addBtn = document.getElementById('addToCartBtn');
     addBtn.style.opacity = '1';
     addBtn.style.pointerEvents = 'auto';
-    addBtn.textContent = 'Add to Cart ✦';
-    // Populate Snipcart data attributes
-    const itemId = (candleName + '-' + selectedType + '-' + (selectedVariant.label || '')).replace(/\s+/g, '-').toLowerCase();
-    addBtn.setAttribute('data-item-id', itemId);
-    addBtn.setAttribute('data-item-name', candleName + ' · ' + label);
-    addBtn.setAttribute('data-item-price', priceNum);
-    addBtn.setAttribute('data-item-description', candleName + ' — ' + label + ' · Hand-poured in Portland, OR');
+    addBtn.textContent = 'Buy Now ✦';
+  }
+
+  // Stripe payment links mapped by product + size
+  const STRIPE_LINKS = {
+    'Mason Jar': {
+      '4 oz': 'https://buy.stripe.com/aFadR90gy5V9b120Qp5wI0g',
+      '6 oz': 'https://buy.stripe.com/eVqfZhd3k3N12uwgPn5wI0h',
+      '8 oz': 'https://buy.stripe.com/28EcN56EW6Zdc56gPn5wI0i',
+      '10 oz': 'https://buy.stripe.com/00wbJ1d3kdnB3yA42B5wI0j'
+    },
+    'Colored Jar': {
+      '4 oz': 'https://buy.stripe.com/fZu8wP2oG5V96KM42B5wI0c',
+      '6 oz': 'https://buy.stripe.com/dRmbJ19R8fvJ0modDb5wI0d',
+      '8 oz': 'https://buy.stripe.com/9B65kDaVcgzNc560Qp5wI0e',
+      '10 oz': 'https://buy.stripe.com/00w8wP9R86Zd3yA1Ut5wI0f'
+    },
+    'Pillar': {
+      '3"': 'https://buy.stripe.com/dRm8wPd3k5V9fhi0Qp5wI0a',
+      '6"': 'https://buy.stripe.com/aFa4gze7ogzNede7eN5wI0k'
+    },
+    'Art Candle': {
+      '6 oz': 'https://buy.stripe.com/4gM00j7J0cjxb12cz75wI05',
+      '8 oz': 'https://buy.stripe.com/00waEX2oG5V9d9aeHf5wI06',
+      '10 oz': 'https://buy.stripe.com/dRmbJ1e7ocjxd9afLj5wI07'
+    },
+    'Decorative': {
+      'Small': 'https://buy.stripe.com/3cI7sL1kC97lfhibv35wI08',
+      'M/L': 'https://buy.stripe.com/8x2bJ19R82IXede56F5wI09'
+    },
+    'Tea Lights': {
+      '6-Pack': 'https://buy.stripe.com/eVqaEX1kCfvJ7OQ1Ut5wI03',
+      '12-Pack': 'https://buy.stripe.com/3cI6oHd3k6Zdd9a0Qp5wI04'
+    },
+    'Wax Melts': {
+      '6-Pack': 'https://buy.stripe.com/3cI00j1kC5V9d9agPn5wI01',
+      '12-Pack': 'https://buy.stripe.com/28E9ATe7o0AP2uw9mV5wI02'
+    }
+  };
+
+  function goToStripe() {
+    if (!selectedType || !selectedVariant) return;
+    const links = STRIPE_LINKS[selectedType];
+    const link = links && links[selectedVariant.label];
+    if (link) {
+      window.open(link, '_blank');
+    } else {
+      // Fallback to main link
+      window.open('https://buy.stripe.com/9B65kD7J0bftglm8iR5wI00', '_blank');
+    }
   }
 
   function closeModal() { document.getElementById('productModal').classList.remove('open'); }
   document.getElementById('productModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 </script>
-<!-- SNIPCART -->
-<div hidden id="snipcart" data-api-key="ZjVhNzFmYzktMWZiZS00M2VkLTkyMjktMGRhNWUyNzM0OGViNjM5MDg0MjU0MTg0MDc4MDIx"></div>
-<script async src="https://cdn.snipcart.com/themes/v3.3.3/default/snipcart.js"></script>
 </body>
 </html>
