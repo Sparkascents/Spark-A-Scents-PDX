@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Spark A Scents PDX</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&family=Italianno&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -509,7 +509,7 @@
 
   .product-desc {
     font-family: 'IM Fell English', serif;
-    font-style: italic;
+    font-style: normal;
     font-size: 0.9rem;
     color: var(--smoke);
     line-height: 1.7;
@@ -989,12 +989,12 @@
   .ncs-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: var(--smoke); line-height: 1.6; }
 
   .product-tagline {
-    font-family: 'IM Fell English', serif;
-    font-style: italic;
-    font-size: 0.78rem;
+    font-family: 'Italianno', 'IM Fell English', cursive;
+    font-style: normal;
+    font-size: 1.45rem;
     color: var(--amber);
     margin-bottom: 0.6rem;
-    line-height: 1.4;
+    line-height: 1.15;
     opacity: 0.9;
   }
 
@@ -1751,10 +1751,10 @@
   ];
 
   const VESSEL_PRICING = {
-    'Mason Jar':  [{ label:'4 oz', price:'$13' },{ label:'6 oz', price:'$17' },{ label:'8 oz', price:'$21' },{ label:'10 oz', price:'$28' }],
+    'Mason Jar':  [{ label:'4 oz', price:'$13' },{ label:'6 oz', price:'$17' },{ label:'8 oz', price:'$21' },{ label:'10 oz', price:'$28' },{ label:'12 oz', price:'$35' },{ label:'16 oz', price:'$42' }],
     'Colored Jar':[{ label:'4 oz', price:'$14' },{ label:'6 oz', price:'$18' },{ label:'8 oz', price:'$22' },{ label:'10 oz', price:'$29' }],
     'Pillar Mold':[{ label:'3"', price:'$17' },{ label:'6"', price:'$25' }],
-    'Art Candle': [{ label:'6 oz', price:'$27' },{ label:'8 oz', price:'$30' },{ label:'10 oz', price:'$33–$35' }],
+    'Art Candle': [{ label:'6 oz', price:'$27' },{ label:'8 oz', price:'$30' },{ label:'10 oz', price:'$35' }],
   };
 
   const WAX_CURE = { 'Soy Wax': 14, 'Paraffin Wax': 8, 'Beeswax': 22 };
@@ -1879,12 +1879,12 @@
 
   const PRICING = {
     'Tea Lights':   { icon: '🕯️', variants: [{ label: '6-Pack', price: '$7' }, { label: '12-Pack', price: '$12' }] },
-    'Wax Melts':    { icon: '🫧', variants: [{ label: '6-Pack', price: '$7' }, { label: '12-Pack', price: '$12' }] },
-    'Decorative':   { icon: '🌸', variants: [{ label: 'Small', price: '$8' }, { label: 'M/L', price: '$15' }] },
+    'Wax Melts':    { icon: '🫧', variants: [{ label: 'Small 6-Pack', price: '$7' }, { label: 'Small 12-Pack', price: '$12' }, { label: 'Medium 6-Pack', price: '$11' }, { label: 'Medium 12-Pack', price: '$19' }, { label: 'Large 3-Pack', price: '$9' }, { label: 'Large 6-Pack', price: '$16' }] },
+    'Wax Relics':   { icon: '🌸', variants: [{ label: 'Small', price: '$8' }, { label: 'Medium', price: '$15' }, { label: 'Large', price: '$25' }, { label: 'X-Large', price: '$40' }] },
     'Pillar':       { icon: '🕍', variants: [{ label: '3"', price: '$17' }, { label: '6"', price: '$25' }] },
-    'Mason Jar':    { icon: '🫙', variants: [{ label: '4 oz', price: '$13' }, { label: '6 oz', price: '$17' }, { label: '8 oz', price: '$21' }, { label: '10 oz', price: '$28' }] },
+    'Mason Jar':    { icon: '🫙', variants: [{ label: '4 oz', price: '$13' }, { label: '6 oz', price: '$17' }, { label: '8 oz', price: '$21' }, { label: '10 oz', price: '$28' }, { label: '12 oz', price: '$35' }, { label: '16 oz', price: '$42' }] },
     'Colored Jar':  { icon: '🎨', variants: [{ label: '4 oz', price: '$14' }, { label: '6 oz', price: '$18' }, { label: '8 oz', price: '$22' }, { label: '10 oz', price: '$29' }] },
-    'Art Candle':   { icon: '✨', variants: [{ label: '6 oz', price: '$27' }, { label: '8 oz', price: '$30' }, { label: '10 oz', price: '$33–$35' }] },
+    'Art Candle':   { icon: '✨', variants: [{ label: '6 oz', price: '$27' }, { label: '8 oz', price: '$30' }, { label: '10 oz', price: '$35' }] },
   };
 
   let selectedType = null;
@@ -1954,7 +1954,7 @@
       addBtn.style.opacity = '0.4';
       addBtn.style.pointerEvents = 'none';
       addBtn.textContent = 'Select a Size to Continue';
-      document.getElementById('variantLabel').textContent = type === 'Wax Melts' ? 'Choose Pack Size' : 'Choose Size';
+      document.getElementById('variantLabel').textContent = type === 'Wax Melts' ? 'Choose Size & Pack' : 'Choose Size';
       const variantGrid = document.getElementById('variantGrid');
       variantGrid.innerHTML = '';
       data.variants.forEach(v => {
@@ -1985,7 +1985,8 @@
     const addBtn = document.getElementById('addToCartBtn');
     addBtn.style.opacity = '1';
     addBtn.style.pointerEvents = 'auto';
-    addBtn.textContent = 'Buy Now ✦';
+    const hasLink = STRIPE_LINKS[selectedType] && STRIPE_LINKS[selectedType][selectedVariant.label];
+    addBtn.textContent = hasLink ? 'Buy Now ✦' : 'Order on Instagram ✦';
   }
 
   // Stripe payment links mapped by product + size
@@ -1994,7 +1995,9 @@
       '4 oz': 'https://buy.stripe.com/aFadR90gy5V9b120Qp5wI0g',
       '6 oz': 'https://buy.stripe.com/eVqfZhd3k3N12uwgPn5wI0h',
       '8 oz': 'https://buy.stripe.com/28EcN56EW6Zdc56gPn5wI0i',
-      '10 oz': 'https://buy.stripe.com/00wbJ1d3kdnB3yA42B5wI0j'
+      '10 oz': 'https://buy.stripe.com/00wbJ1d3kdnB3yA42B5wI0j',
+      '12 oz': '',  // TODO: paste new $35 Stripe link
+      '16 oz': ''   // TODO: paste new $42 Stripe link
     },
     'Colored Jar': {
       '4 oz': 'https://buy.stripe.com/fZu8wP2oG5V96KM42B5wI0c',
@@ -2011,17 +2014,23 @@
       '8 oz': 'https://buy.stripe.com/00waEX2oG5V9d9aeHf5wI06',
       '10 oz': 'https://buy.stripe.com/dRmbJ1e7ocjxd9afLj5wI07'
     },
-    'Decorative': {
+    'Wax Relics': {
       'Small': 'https://buy.stripe.com/3cI7sL1kC97lfhibv35wI08',
-      'M/L': 'https://buy.stripe.com/8x2bJ19R82IXede56F5wI09'
+      'Medium': 'https://buy.stripe.com/8x2bJ19R82IXede56F5wI09',
+      'Large': '',   // TODO: paste new $25 Stripe link
+      'X-Large': ''  // TODO: paste new $40 Stripe link
     },
     'Tea Lights': {
       '6-Pack': 'https://buy.stripe.com/eVqaEX1kCfvJ7OQ1Ut5wI03',
       '12-Pack': 'https://buy.stripe.com/3cI6oHd3k6Zdd9a0Qp5wI04'
     },
     'Wax Melts': {
-      '6-Pack': 'https://buy.stripe.com/3cI00j1kC5V9d9agPn5wI01',
-      '12-Pack': 'https://buy.stripe.com/28E9ATe7o0AP2uw9mV5wI02'
+      'Small 6-Pack': 'https://buy.stripe.com/3cI00j1kC5V9d9agPn5wI01',
+      'Small 12-Pack': 'https://buy.stripe.com/28E9ATe7o0AP2uw9mV5wI02',
+      'Medium 6-Pack': '',   // TODO: paste new $11 Stripe link
+      'Medium 12-Pack': '',  // TODO: paste new $19 Stripe link
+      'Large 3-Pack': '',    // TODO: paste new $9 Stripe link
+      'Large 6-Pack': ''     // TODO: paste new $16 Stripe link
     }
   };
 
@@ -2032,8 +2041,8 @@
     if (link) {
       window.open(link, '_blank');
     } else {
-      // Fallback to main link
-      window.open('https://buy.stripe.com/9B65kD7J0bftglm8iR5wI00', '_blank');
+      // No checkout link yet for this size: send them to Instagram to order
+      window.open('https://www.instagram.com/sparkascentspdx503/', '_blank');
     }
   }
 
